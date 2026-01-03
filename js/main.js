@@ -1,25 +1,3 @@
-// ---------- LAYOUT ----------
-function loadLayout() {
-fetch('nav.html')
-  .then(res => res.text())
-  .then(html => { 
-    document.getElementById('nav').innerHTML = html;
-
-    // Inicializa logo 3D solo después de que el navegador haya pintado el DOM
-    requestAnimationFrame(() => {
-      if (window.initLogo3D) window.initLogo3D();
-    });
-  })
-  .catch(err => console.error('Error cargando nav:', err));
-
-  fetch('footer.html')
-    .then(res => res.text())
-    .then(html => { 
-      document.getElementById('footer').innerHTML = html;
-    })
-    .catch(err => console.error('Error cargando footer:', err));
-}
-
 
 // ---------- PRODUCT CARD ----------
 function createProductCard(product, theme) {
@@ -92,8 +70,6 @@ document.addEventListener('click', e => {
 
 // ---------- INIT ----------
 document.addEventListener('DOMContentLoaded', () => {
-  loadLayout();
-
   const category = document.body.dataset.category;
   loadCategory(category);
 });

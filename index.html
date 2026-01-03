@@ -1,47 +1,217 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CarShop</title>
-  <a href="cart.html" class="hover:text-gray-300">🛒</a>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delta Cars</title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Tus estilos -->
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col" data-category="home">
 
-  <div id="nav"></div>
+<body class="bg-white text-black min-h-screen flex flex-col">
 
-  <main class="flex-1 container mx-auto px-6 py-10 pt-24">
-    <h1 class="text-4xl font-bold mb-8 text-center">Bienvenido a CarShop</h1>
-    <p class="text-center mb-8 text-lg">
-      Explora nuestras categorías de coches:
-    </p>
+<!-- NAVBAR (TU DISEÑO) -->
+<nav class="bg-white w-full h-20 flex items-center justify-between px-10 border-b border-gray-200">
 
-    <div class="flex justify-center gap-6">
-      <a href="categoria1.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
-        BMW
-      </a>
-      <a href="categoria2.html" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition">
-        Audi
-      </a>
-      <a href="categoria3.html" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
-        Mercedes
-      </a>
+  <!-- Logo canvas izquierda -->
+  <div class="flex items-center">
+    <canvas id="logo-canvas" class="w-12 h-12"></canvas>
+  </div>
+
+  <!-- Delta centrado -->
+  <div class="flex items-center gap-2">
+    <h1 class="text-3xl font-extrabold tracking-wide">Delta</h1>
+    <img src="img/delta.png" alt="Delta logo" class="w-6 h-6">
+  </div>
+
+  <!-- Carrito + burger -->
+  <div class="relative flex items-center gap-6">
+
+    <!-- Carrito -->
+    <a href="cart.html" class="hover:text-gray-600">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
+      </svg>
+    </a>
+
+    <!-- Burger -->
+    <button id="menu-btn" class="hover:text-gray-600">
+      ☰
+    </button>
+
+    <!-- Dropdown -->
+    <div id="menu"
+      class="hidden absolute right-0 top-10 w-40 bg-white border border-gray-200 shadow-md text-sm uppercase tracking-widest">
+      <a href="#" class="block px-4 py-3 hover:bg-gray-100">BMW</a>
+      <a href="#" class="block px-4 py-3 hover:bg-gray-100">Audi</a>
+      <a href="#" class="block px-4 py-3 hover:bg-gray-100">Mercedes</a>
     </div>
-  </main>
+  </div>
+</nav>
 
-  <div id="footer"></div>
+<!-- SLIDER DE COCHES (FIJO Y MODERNO) -->
+<section class="w-full mt-16">
+  <div class="max-w-7xl mx-auto px-10 relative">
 
-  <script src="js/logo3d.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/cart.js"></script>
+    <!-- Contenedor -->
+    <div class="relative h-[520px] overflow-hidden">
+
+      <!-- Slide 1 -->
+      <div class="slide absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 opacity-100">
+        <img src="img/portada.png"
+             class="w-full max-w-6xl object-contain" />
+        <p class="mt-10 text-sm uppercase tracking-widest text-gray-500">
+          BMW M5 · Performance
+        </p>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 opacity-0">
+        <img src="img/portada.png"
+             class="w-full max-w-6xl object-contain" />
+        <p class="mt-10 text-sm uppercase tracking-widest text-gray-500">
+          BMW M5 · Performance
+        </p>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 opacity-0">
+        <img src="img/portada.png"
+             class="w-full max-w-6xl object-contain" />
+        <p class="mt-10 text-sm uppercase tracking-widest text-gray-500">
+          BMW M5 · Performance
+        </p>
+      </div>
+            <div class="slide absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 opacity-0">
+        <img src="img/portada.png"
+             class="w-full max-w-6xl object-contain" />
+        <p class="mt-10 text-sm uppercase tracking-widest text-gray-500">
+          BMW M5 · Performance
+        </p>
+      </div>
+            <div class="slide absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 opacity-0">
+        <img src="img/portada.png"
+             class="w-full max-w-6xl object-contain" />
+        <p class="mt-10 text-sm uppercase tracking-widest text-gray-500">
+          Audi RS7 · Tecnología
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Flecha izquierda -->
+    <button id="prev"
+      class="absolute left-0 top-1/2 -translate-y-1/2 text-3xl text-gray-400 hover:text-black transition">
+      ‹
+    </button>
+
+    <!-- Flecha derecha -->
+    <button id="next"
+      class="absolute right-0 top-1/2 -translate-y-1/2 text-3xl text-gray-400 hover:text-black transition">
+      ›
+    </button>
+
+  </div>
+</section>
+
+
+
+<!-- CATEGORÍAS (ABAJO, ESTILO LEXUS) -->
+<section class="w-full mt-16 border-t border-gray-200">
+  <div class="max-w-7xl mx-auto px-10 py-16">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+      <!-- BMW -->
+      <a href="categoria1.html" class="group">
+        <div class="border-b pb-6 transition-all duration-300 group-hover:border-black">
+          <h3 class="text-lg tracking-widest uppercase mb-2">
+            BMW
+          </h3>
+          <p class="text-sm text-gray-500 transition-colors group-hover:text-black">
+            Deportividad alemana
+          </p>
+        </div>
+      </a>
+
+      <!-- Audi -->
+      <a href="categoria2.html" class="group">
+        <div class="border-b pb-6 transition-all duration-300 group-hover:border-black">
+          <h3 class="text-lg tracking-widest uppercase mb-2">
+            Audi
+          </h3>
+          <p class="text-sm text-gray-500 transition-colors group-hover:text-black">
+            Tecnología y diseño
+          </p>
+        </div>
+      </a>
+
+      <!-- Mercedes -->
+      <a href="categoria3.html" class="group">
+        <div class="border-b pb-6 transition-all duration-300 group-hover:border-black">
+          <h3 class="text-lg tracking-widest uppercase mb-2">
+            Mercedes
+          </h3>
+          <p class="text-sm text-gray-500 transition-colors group-hover:text-black">
+            Lujo y confort
+          </p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-200 py-10 text-center text-sm text-gray-500 mt-auto">
+  © 2026 Delta Cars · Diseño moderno
+</footer>
+
+<!-- JS dropdown -->
+<script>
+  const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("menu");
+
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+  });
+</script>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('opacity-100', i === index);
+      slide.classList.toggle('opacity-0', i !== index);
+    });
+  }
+
+  document.getElementById('next').addEventListener('click', () => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  });
+
+  document.getElementById('prev').addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  });
+</script>
+
+
+<script src="js/logo3d.js"></script> <script src="js/main.js"></script> <script src="js/cart.js"></script>
+
 </body>
-
-
 </html>
