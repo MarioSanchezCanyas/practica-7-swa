@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMW | CarShop</title>
+
+  <!-- Tailwind (OBLIGATORIO en cada página) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Zdog si lo usas -->
+  <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body data-category="audi" class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- NAV -->
+  <div id="nav"></div>
+
+  <!-- CONTENIDO -->
+  <main class="flex-1 container mx-auto px-6 py-10 pt-24">
+    <h1 class="text-3xl font-bold mb-8 text-center">BMW</h1>
+
+    <!-- GRID DE PRODUCTOS -->
+    <div
+      id="products"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+    ></div>
+  </main>
+
+  <!-- FOOTER -->
+  <div id="footer"></div>
+
+  <!-- JS PRINCIPAL -->
+  <script src="js/logo3d.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+{
+  "categories": [
+    {
+      "id": "bmw",
+      "name": "BMW",
+      "theme": "dark",
+      "products": [
+        {
+          "id": 1,
+          "model": "BMW M3",
+          "price": 75000,
+          "description": "Sedán deportivo de altas prestaciones",
+          "rating": 4.8,
+          "stock": 3,
+          "image": "assets/images/bmw-m3.jpg"
+        },
+        {
+          "id": 2,
+          "model": "BMW X5",
+          "price": 68000,
+          "description": "SUV premium espacioso",
+          "rating": 4.5,
+          "stock": 5,
+          "image": "assets/images/bmw-x5.jpg"
+        },
+        {
+          "id": 3,
+          "model": "BMW i8",
+          "price": 140000,
+          "description": "Deportivo híbrido futurista",
+          "rating": 4.9,
+          "stock": 2,
+          "image": "assets/images/bmw-i8.jpg"
+        },
+        {
+          "id": 4,
+          "model": "BMW Z4",
+          "price": 61000,
+          "description": "Roadster elegante y rápido",
+          "rating": 4.7,
+          "stock": 4,
+          "image": "assets/images/bmw-z4.jpg"
+        },
+        {
+          "id": 5,
+          "model": "BMW X3",
+          "price": 53000,
+          "description": "SUV compacto premium",
+          "rating": 4.6,
+          "stock": 6,
+          "image": "assets/images/bmw-x3.jpg"
+        }
+      ]
+    },
+    {
+      "id": "audi",
+      "name": "Audi",
+      "theme": "light",
+      "products": [
+        {
+          "id": 6,
+          "model": "Audi A4",
+          "price": 45000,
+          "description": "Sedán clásico de lujo",
+          "rating": 4.5,
+          "stock": 5,
+          "image": "assets/images/audi-a4.jpg"
+        },
+        {
+          "id": 7,
+          "model": "Audi Q7",
+          "price": 70000,
+          "description": "SUV grande para toda la familia",
+          "rating": 4.6,
+          "stock": 3,
+          "image": "assets/images/audi-q7.jpg"
+        },
+        {
+          "id": 8,
+          "model": "Audi TT",
+          "price": 55000,
+          "description": "Deportivo compacto y ágil",
+          "rating": 4.7,
+          "stock": 4,
+          "image": "assets/images/audi-tt.jpg"
+        },
+        {
+          "id": 9,
+          "model": "Audi e-tron",
+          "price": 80000,
+          "description": "SUV eléctrico premium",
+          "rating": 4.8,
+          "stock": 2,
+          "image": "assets/images/audi-e-tron.jpg"
+        },
+        {
+          "id": 10,
+          "model": "Audi Q3",
+          "price": 42000,
+          "description": "SUV compacto y versátil",
+          "rating": 4.4,
+          "stock": 6,
+          "image": "assets/images/audi-q3.jpg"
+        }
+      ]
+    },
+    {
+      "id": "mercedes",
+      "name": "Mercedes",
+      "theme": "light",
+      "products": [
+        {
+          "id": 11,
+          "model": "Mercedes C-Class",
+          "price": 47000,
+          "description": "Sedán de lujo elegante",
+          "rating": 4.6,
+          "stock": 5,
+          "image": "assets/images/mercedes-c-class.jpg"
+        },
+        {
+          "id": 12,
+          "model": "Mercedes GLE",
+          "price": 72000,
+          "description": "SUV premium familiar",
+          "rating": 4.7,
+          "stock": 4,
+          "image": "assets/images/mercedes-gle.jpg"
+        },
+        {
+          "id": 13,
+          "model": "Mercedes A-Class",
+          "price": 35000,
+          "description": "Compacto elegante y moderno",
+          "rating": 4.5,
+          "stock": 7,
+          "image": "assets/images/mercedes-a-class.jpg"
+        },
+        {
+          "id": 14,
+          "model": "Mercedes S-Class",
+          "price": 110000,
+          "description": "El sedán de lujo definitivo",
+          "rating": 4.9,
+          "stock": 2,
+          "image": "assets/images/mercedes-s-class.jpg"
+        },
+        {
+          "id": 15,
+          "model": "Mercedes GLA",
+          "price": 40000,
+          "description": "SUV compacto premium",
+          "rating": 4.5,
+          "stock": 6,
+          "image": "assets/images/mercedes-gla.jpg"
+        }
+      ]
+    }
+  ]
+}

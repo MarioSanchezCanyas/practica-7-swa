@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarShop</title>
+  <a href="cart.html" class="hover:text-gray-300">🛒</a>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
+
+  <!-- Tus estilos -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-    
+<body class="min-h-screen flex flex-col" data-category="home">
+
+  <div id="nav"></div>
+
+  <main class="flex-1 container mx-auto px-6 py-10 pt-24">
+    <h1 class="text-4xl font-bold mb-8 text-center">Bienvenido a CarShop</h1>
+    <p class="text-center mb-8 text-lg">
+      Explora nuestras categorías de coches:
+    </p>
+
+    <div class="flex justify-center gap-6">
+      <a href="categoria1.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+        BMW
+      </a>
+      <a href="categoria2.html" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition">
+        Audi
+      </a>
+      <a href="categoria3.html" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
+        Mercedes
+      </a>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="js/logo3d.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
 </body>
+
+
 </html>
