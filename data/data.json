@@ -1,158 +1,168 @@
 {
   "categories": [
     {
-      "id": "bmw",
-      "name": "BMW",
+      "id": "coches",
+      "name": "Coches",
       "theme": "dark",
       "products": [
         {
           "id": 1,
-          "model": "BMW M3",
-          "price": 75000,
-          "description": "Sedán deportivo de altas prestaciones",
+          "model": "Porsche 911 Turbo (996)",
+          "price": 100000,
+          "description": "Deportivo icónico alemán, rendimiento excepcional",
           "rating": 4.8,
-          "stock": 3,
-          "image": "assets/images/bmw-m3.jpg"
+          "stock": 1,
+          "images": [
+            "img/996.png",
+            "img/996rear.png"
+          ]
         },
         {
           "id": 2,
-          "model": "BMW X5",
-          "price": 68000,
-          "description": "SUV premium espacioso",
+          "model": "Ferrari F355 F1 Berlinetta",
+          "price": 125000,
+          "description": "Clásico deportivo italiano, diseño atemporal y motor V8",
           "rating": 4.5,
-          "stock": 5,
-          "image": "assets/images/bmw-x5.jpg"
+          "stock": 1,
+          "images": [
+            "img/F355.png",
+            "img/F355rear.png"
+          ]
         },
         {
           "id": 3,
-          "model": "BMW i8",
-          "price": 140000,
-          "description": "Deportivo híbrido futurista",
+          "model": "TVR Tuscan Speed Six",
+          "price": 45000,
+          "description": "Ligero deportivo británico, experiencia de conducción pura",
           "rating": 4.9,
-          "stock": 2,
-          "image": "assets/images/bmw-i8.jpg"
+          "stock": 1,
+          "images": [
+            "img/tvr.png",
+            "img/tvrrear.png"
+          ]
         },
         {
           "id": 4,
-          "model": "BMW Z4",
-          "price": 61000,
-          "description": "Roadster elegante y rápido",
+          "model": "Mercedes-Benz SL600",
+          "price": 75000,
+          "description": "Grand Tourer de lujo, comodidad y potencia atemporales.",
           "rating": 4.7,
-          "stock": 4,
-          "image": "assets/images/bmw-z4.jpg"
+          "stock": 1,
+          "images": [
+            "img/sl600.png",
+            "img/sl600rear.png"
+          ]
         },
         {
           "id": 5,
-          "model": "BMW X3",
-          "price": 53000,
-          "description": "SUV compacto premium",
-          "rating": 4.6,
-          "stock": 6,
-          "image": "assets/images/bmw-x3.jpg"
+          "model": "Acura NSX (NA2)",
+          "price": 180000,
+          "description": "Legendario deportivo japonés, tecnología avanzada y rendimiento equilibrado",
+          "rating": 4.8,
+          "stock": 1,
+          "images": [
+            "img/nsx.png",
+            "img/nsxrear.png"
+          ]
         }
       ]
     },
     {
-      "id": "audi",
-      "name": "Audi",
+      "id": "motos",
+      "name": "Motos",
       "theme": "light",
       "products": [
         {
           "id": 6,
-          "model": "Audi A4",
-          "price": 45000,
-          "description": "Sedán clásico de lujo",
-          "rating": 4.5,
-          "stock": 5,
-          "image": "assets/images/audi-a4.jpg"
+          "model": "Suzuki GSX-R1000 ",
+          "price": 12000,
+          "description": "Deportiva japonesa de alto rendimiento",
+          "promo": "A",
+          "image": "img/suzuki.png"
         },
         {
           "id": 7,
-          "model": "Audi Q7",
-          "price": 70000,
-          "description": "SUV grande para toda la familia",
-          "rating": 4.6,
-          "stock": 3,
-          "image": "assets/images/audi-q7.jpg"
+          "model": "Ducati 999R",
+          "price": 25000,
+          "description": "Superbike italiana exclusiva",
+          "promo": "A",
+          "image": "img/ducati.png"
         },
         {
           "id": 8,
-          "model": "Audi TT",
-          "price": 55000,
-          "description": "Deportivo compacto y ágil",
-          "rating": 4.7,
-          "stock": 4,
-          "image": "assets/images/audi-tt.jpg"
+          "model": "Kawasaki Ninja ZX-10R",
+          "price": 8000,
+          "description": "Deportiva japonesa avanzada",
+          "promo": "A",
+          "image": "img/kawasaki.png"
         },
         {
           "id": 9,
-          "model": "Audi e-tron",
-          "price": 80000,
-          "description": "SUV eléctrico premium",
-          "rating": 4.8,
-          "stock": 2,
-          "image": "assets/images/audi-e-tron.jpg"
+          "model": "BMW Motorrad K1200S",
+          "price": 5500,
+          "description": "Touring deportiva de lujo",
+          "promo": "A",
+          "image": "img/bmw.png"
         },
         {
           "id": 10,
-          "model": "Audi Q3",
-          "price": 42000,
-          "description": "SUV compacto y versátil",
-          "rating": 4.4,
-          "stock": 6,
-          "image": "assets/images/audi-q3.jpg"
+          "model": "Triumph Daytona 650",
+          "price": 9000,
+          "description": "Deportiva británica clásica",
+          "promo": "A",
+          "image": "img/triumph.png"
         }
       ]
     },
     {
-      "id": "mercedes",
-      "name": "Mercedes",
+      "id": "Cascos",
+      "name": "Cascos",
       "theme": "light",
       "products": [
         {
           "id": 11,
-          "model": "Mercedes C-Class",
+          "model": "Shoei NXR 2",
           "price": 47000,
-          "description": "Sedán de lujo elegante",
+          "description": "Casco integral de alta gama",
           "rating": 4.6,
           "stock": 5,
-          "image": "assets/images/mercedes-c-class.jpg"
+          "images": ["img/shoei.png", "img/shoei2.png", "img/shoei3.png"]
         },
         {
           "id": 12,
-          "model": "Mercedes GLE",
+          "model": "Arai Quantic",
           "price": 72000,
-          "description": "SUV premium familiar",
+          "description": "Casco integral premium",
           "rating": 4.7,
           "stock": 4,
-          "image": "assets/images/mercedes-gle.jpg"
+          "images": ["img/arai.png", "img/arai2.png", "img/arai3.png"]
         },
         {
           "id": 13,
-          "model": "Mercedes A-Class",
+          "model": "Bell Lithium",
           "price": 35000,
-          "description": "Compacto elegante y moderno",
+          "description": "Casco modular ligero",
           "rating": 4.5,
           "stock": 7,
-          "image": "assets/images/mercedes-a-class.jpg"
+          "images": ["img/bell.png", "img/bell2.png", "img/bell3.png"]
         },
         {
           "id": 14,
-          "model": "Mercedes S-Class",
+          "model": "Schuberth S3",
           "price": 110000,
-          "description": "El sedán de lujo definitivo",
+          "description": "Casco integral de lujo",
           "rating": 4.9,
           "stock": 2,
-          "image": "assets/images/mercedes-s-class.jpg"
+          "images": ["img/schuberth.png", "img/schuberth2.png", "img/schuberth3.png"]
         },
         {
           "id": 15,
-          "model": "Mercedes GLA",
+          "model": "AGV K6 S",
           "price": 40000,
           "description": "SUV compacto premium",
           "rating": 4.5,
           "stock": 6,
-          "image": "assets/images/mercedes-gla.jpg"
+          "images": ["img/agv.png", "img/agv2.png", "img/agv3.png"]
         }
       ]
     }

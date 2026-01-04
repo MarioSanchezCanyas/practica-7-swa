@@ -1,41 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BMW | CarShop</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BMW | Delta Cars</title>
 
-  <!-- Tailwind (OBLIGATORIO en cada página) -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Zdog si lo usas -->
   <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
-
-  <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body data-category="bmw" class="bg-gray-100 min-h-screen flex flex-col">
+<body data-category="coches" class="bg-gray-100 min-h-screen flex flex-col">
 
-  <!-- NAV -->
-  <div id="nav"></div>
+<!-- NAVBAR (TU DISEÑO) -->
+<nav class="bg-white w-full h-20 flex items-center justify-between px-10 border-b border-gray-200">
+
+  <!-- Logo canvas izquierda -->
+  <div class="flex items-center">
+    <canvas id="logo-canvas" class="w-12 h-12"></canvas>
+  </div>
+
+  <!-- Delta centrado -->
+<a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition">
+  <h1 class="text-3xl font-extrabold tracking-wide">Delta</h1>
+  <img src="img/delta.png" alt="Delta logo" class="w-6 h-6">
+</a>
+
+  <!-- Carrito + burger -->
+  <div class="relative flex items-center gap-6">
+
+    <!-- Carrito -->
+    <a href="cart.html" class="hover:text-gray-600">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
+      </svg>
+    </a>
+
+    <!-- Burger -->
+    <button id="menu-btn" class="hover:text-gray-600">
+      ☰
+    </button>
+
+    <!-- Dropdown -->
+    <div id="menu"
+      class="hidden absolute right-0 top-10 w-40 bg-white border border-gray-200 shadow-md text-sm uppercase tracking-widest">
+      <a href="#" class="block px-4 py-3 hover:bg-gray-100">BMW</a>
+      <a href="#" class="block px-4 py-3 hover:bg-gray-100">Audi</a>
+      <a href="#" class="block px-4 py-3 hover:bg-gray-100">Mercedes</a>
+    </div>
+  </div>
+</nav>
 
   <!-- CONTENIDO -->
-  <main class="flex-1 container mx-auto px-6 py-10 pt-24">
-    <h1 class="text-3xl font-bold mb-8 text-center">BMW</h1>
+  <main class="flex-1 max-w-7xl mx-auto px-6 py-20 pt-12">
+<!-- FILTROS PREMIUM -->
+<div class="mb-16">
+
+  <!-- Barra superior -->
+  <div class="flex flex-wrap items-center justify-between gap-6 border-b border-gray-200 pb-6">
+
+    <!-- Izquierda: título + chip -->
+    <div class="flex items-center gap-4">
+      <h2 class="text-sm uppercase tracking-widest text-gray-500">
+        Filtrado por
+      </h2>
+
+      <span class="flex items-center gap-2 bg-black text-white text-xs px-4 py-2 rounded-full uppercase tracking-widest">
+        BMW
+      </span>
+    </div>
+
+    <!-- Derecha: ordenar -->
+    <div>
+      <select
+        id="filter-sort"
+        class="border border-gray-300 px-5 py-2 text-sm uppercase tracking-widest
+               hover:border-black transition bg-white"
+      >
+        <option value="">Ordenar</option>
+        <option value="price-asc">Precio ↑</option>
+        <option value="price-desc">Precio ↓</option>
+        <option value="rating">Mejor valorados</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- Filtros secundarios -->
+  <div class="flex flex-wrap gap-10 mt-8">
+
+    <!-- Precio -->
+    <div>
+      <label class="block uppercase tracking-widest text-xs text-gray-500 mb-2">
+        Precio máximo
+      </label>
+      <select
+        id="filter-price"
+        class="border border-gray-300 px-4 py-2 bg-white
+               hover:border-black transition"
+      >
+        <option value="0">Sin límite</option>
+        <option value="60000">≤ 60.000 €</option>
+        <option value="80000">≤ 80.000 €</option>
+        <option value="100000">≤ 100.000 €</option>
+      </select>
+    </div>
+
+    <!-- Rating -->
+    <div>
+      <label class="block uppercase tracking-widest text-xs text-gray-500 mb-2">
+        Valoración
+      </label>
+      <select
+        id="filter-rating"
+        class="border border-gray-300 px-4 py-2 bg-white
+               hover:border-black transition"
+      >
+        <option value="0">Todas</option>
+        <option value="4.5">4.5+</option>
+        <option value="4.7">4.7+</option>
+        <option value="4.9">4.9</option>
+      </select>
+    </div>
+
+    <!-- Stock -->
+    <div>
+      <label class="block uppercase tracking-widest text-xs text-gray-500 mb-2">
+        Disponibilidad
+      </label>
+      <select
+        id="filter-stock"
+        class="border border-gray-300 px-4 py-2 bg-white
+               hover:border-black transition"
+      >
+        <option value="0">Todos</option>
+        <option value="1">En stock</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+
 
     <!-- GRID DE PRODUCTOS -->
     <div
       id="products"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 place-items-stretch"
     ></div>
   </main>
 
-  <!-- FOOTER -->
-  <div id="footer"></div>
+<!-- FOOTER -->
+<footer class="border-t border-gray-200 py-10 text-center text-sm text-gray-500 mt-auto">
+  © 2026 Delta Cars · Diseño moderno
+</footer>
 
-  <!-- JS PRINCIPAL -->
+  <!-- JS -->
   <script src="js/logo3d.js"></script>
-  <script src="js/main.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
