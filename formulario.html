@@ -21,102 +21,98 @@
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
 <!-- NAVBAR (el mismo que usas en el resto) -->
-<nav class="bg-white w-full h-20 flex items-center justify-between px-10 border-b border-gray-200">
+<nav class="sticky top-0 z-50 bg-white w-full h-20 grid grid-cols-3 items-center px-10 border-b border-gray-200">
 
-  <!-- LOGO IZQUIERDA -->
+  <!-- IZQUIERDA -->
   <div class="flex items-center gap-4">
     <canvas id="logo-canvas" class="w-12 h-12"></canvas>
   </div>
 
-  <!-- LOGO CENTRO -->
-  <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition">
-    <h1 class="text-3xl font-extrabold tracking-wide">Delta</h1>
-    <img src="img/delta.png" alt="Delta logo" class="w-6 h-6">
-  </a>
+  <!-- CENTRO -->
+  <div class="flex justify-center">
+    <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition">
+      <h1 class="text-3xl font-extrabold tracking-wide">Delta</h1>
+      <img src="img/delta.png" alt="Delta logo" class="w-6 h-6">
+    </a>
+  </div>
 
   <!-- DERECHA -->
-  <div class="relative flex items-center gap-10">
+  <div class="flex items-center gap-10 justify-end relative">
 
     <!-- MENÚ DESKTOP -->
-    <div class="hidden md:flex items-center gap-12 uppercase tracking-[0.25em] text-xs">
+    <div class="hidden md:flex items-center gap-10 uppercase tracking-[0.25em] text-xs">
 
-      <a href="categoria1.html"
-         class="relative after:absolute after:left-0 after:-bottom-1
-                after:h-[1px] after:w-0 after:bg-black
-                hover:after:w-full after:transition-all">
+      <a href="categoria1.html" class="relative hover:opacity-70 transition">
         Coches
       </a>
 
-      <a href="categoria2.html"
-         class="relative after:absolute after:left-0 after:-bottom-1
-                after:h-[1px] after:w-0 after:bg-black
-                hover:after:w-full after:transition-all">
+      <a href="categoria2.html" class="relative hover:opacity-70 transition">
         Motos
       </a>
 
-      <a href="categoria3.html"
-         class="relative after:absolute after:left-0 after:-bottom-1
-                after:h-[1px] after:w-0 after:bg-black
-                hover:after:w-full after:transition-all">
+      <a href="categoria3.html" class="relative hover:opacity-70 transition">
         Cascos
       </a>
+
+      <!-- GAME (DESTACADO SUTIL) -->
+<a href="./game/index.html"
+   class="relative flex items-center gap-1 text-black font-semibold
+          hover:opacity-70 transition">
+  Videojuego
+</a>
+
 
     </div>
 
     <!-- CARRITO -->
     <a href="cart.html" class="relative hover:text-gray-600 transition">
-
       <svg xmlns="http://www.w3.org/2000/svg"
            width="22" height="22"
            fill="currentColor"
            viewBox="0 0 16 16">
-        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
+        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 0 0 1 1-1h1.217z"/>
       </svg>
 
-      <!-- CONTADOR -->
-      <span
-        id="cart-count"
-        class="absolute -top-2 -right-2
-               bg-red-600 text-white
-               text-[10px] font-bold
-               w-5 h-5 rounded-full
-               flex items-center justify-center
-               hidden">
+      <span id="cart-count"
+            class="absolute -top-2 -right-2 bg-red-600 text-white
+                   text-[10px] font-bold w-5 h-5 rounded-full
+                   flex items-center justify-center hidden">
         0
       </span>
     </a>
 
-    <!-- BURGER (SOLO MÓVIL) -->
+    <!-- BURGER -->
     <button id="menu-btn" class="md:hidden hover:text-gray-600 text-2xl">
       ☰
     </button>
 
-    <!-- DROPDOWN MÓVIL -->
-    <div
-      id="menu"
-      class="hidden md:hidden absolute right-0 top-14 w-52 bg-white border border-gray-200 shadow-xl
-             text-xs uppercase tracking-widest z-50"
-    >
-      <a href="index.html" class="block px-6 py-4 hover:bg-gray-100">
-        Home
+    <!-- MENÚ MÓVIL -->
+    <div id="menu"
+         class="hidden absolute right-0 top-14 w-52 bg-white border
+                border-gray-200 shadow-xl text-xs uppercase
+                tracking-widest z-50">
+
+      <a href="index.html" class="block px-6 py-4 hover:bg-gray-100">Home</a>
+      <a href="categoria1.html" class="block px-6 py-4 hover:bg-gray-100">Coches</a>
+      <a href="categoria2.html" class="block px-6 py-4 hover:bg-gray-100">Motos</a>
+      <a href="categoria3.html" class="block px-6 py-4 hover:bg-gray-100">Cascos</a>
+
+      <!-- GAME EN MÓVIL -->
+      <a href="./game/index.html"
+         class="block px-6 py-4 hover:bg-gray-100 font-semibold">
+        Videojuego
       </a>
-      <a href="categoria1.html" class="block px-6 py-4 hover:bg-gray-100">
-        Coches
-      </a>
-      <a href="categoria2.html" class="block px-6 py-4 hover:bg-gray-100">
-        Motos
-      </a>
-      <a href="categoria3.html" class="block px-6 py-4 hover:bg-gray-100">
-        Cascos
-      </a>
+
       <a href="cart.html"
          class="block px-6 py-4 hover:bg-gray-100 border-t border-gray-200">
         Carrito
       </a>
+
     </div>
 
   </div>
 </nav>
+
 
 
 <!-- FORMULARIO -->
@@ -214,7 +210,7 @@ transition
 </main>
 
 <!-- FOOTER (el mismo que ya tienes) -->
-<footer class="border-t border-gray-200 mt-auto bg-white">
+<footer class="border-t border-gray-200 mt-auto">
   <div class="max-w-7xl mx-auto px-10 py-8 relative
               flex items-center text-sm text-gray-500">
 
@@ -224,14 +220,15 @@ transition
     <!-- CENTRO REAL -->
     <div class="absolute left-1/2 -translate-x-1/2
                 flex gap-6 uppercase tracking-widest text-xs">
-      <a href="categoria1.html" class="hover:text-black transition">Coches</a>
-      <a href="categoria2.html" class="hover:text-black transition">Motos</a>
-      <a href="categoria3.html" class="hover:text-black transition">Cascos</a>
+      <a href="../categoria1.html" class="hover:text-black transition">Coches</a>
+      <a href="../categoria2.html" class="hover:text-black transition">Motos</a>
+      <a href="../categoria3.html" class="hover:text-black transition">Cascos</a>
+      <a href="../game/index.html" class="hover:text-black transition">Videojuego</a>
     </div>
 
     <!-- DERECHA -->
     <a
-      href="formulario.html"
+      href="../formulario.html"
       class="ml-auto uppercase tracking-widest text-xs
              hover:text-black transition
              border-b border-transparent hover:border-black pb-[2px]"
@@ -241,7 +238,6 @@ transition
 
   </div>
 </footer>
-
 <script src="js/logo3d.js"></script>
 <script src="js/main.js"></script>
 <script src="js/cart.js"></script>

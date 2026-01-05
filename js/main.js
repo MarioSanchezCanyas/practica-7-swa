@@ -410,7 +410,7 @@ function renderMotos(products, limit = 5) {
   container.innerHTML = `
 <div class="max-w-screen-2xl mx-auto px-6 py-32 space-y-14 mx-12">
       ${list.map(product => `
-        <div class="bg-blue-50 border border-gray-200 rounded-xl shadow-sm
+        <div class="bg-cyan-50 border border-gray-200 rounded-xl shadow-sm
                     grid grid-cols-1 lg:grid-cols-2 gap-16 items-center
                     p-14">
 
