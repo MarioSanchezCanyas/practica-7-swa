@@ -2,185 +2,278 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
+    parent: 'game-container',
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 400 },
             debug: false
         }
     },
     scene: {
-        preload: preload,
-        create: create,
-        update: update
+        preload,
+        create,
+        update
     }
 };
 
 var player;
-var stars;
-var bombs;
 var platforms;
 var cursors;
-var score = 0;
+
+var gasolinaGroup;
+var llavesGroup;
+var fuegos;
+
+var gasolinaCount = 0;
+var llavesCount = 0;
+var ronda = 1;
+var repairKey;
+
+
+var gasolinaText;
+var llavesText;
+var infoText;
+
+var coche;
+var repairing = false;
+var repairTimer = 0;
+
 var gameOver = false;
-var scoreText;
 
-var game = new Phaser.Game(config);
+new Phaser.Game(config);
 
-function preload ()
-{
-    this.load.image('sky', 'assets/sky.png');
+function preload() {
+    this.load.image('bg', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image('gasolina', 'assets/gasolina.png');
+    this.load.image('llave', 'assets/llave.png');
+    this.load.image('fuego', 'assets/fireball.png');
+    this.load.image('coche', 'assets/car.png');
+    this.load.spritesheet('player', 'assets/dude.png', {
+        frameWidth: 32,
+        frameHeight: 48
+    });
 }
 
-function create ()
-{
-    //  A simple background for our game
-    this.add.image(400, 300, 'sky');
+function create() {
+    this.add.image(400, 300, 'bg');
 
-    //  The platforms group contains the ground and the 2 ledges we can jump on
+    // PLATAFORMAS (GRIS)
     platforms = this.physics.add.staticGroup();
+    platforms.create(400, 580, 'ground')
+        .setScale(2)
+        .setTint(0x888888)
+        .refreshBody();
 
-    //  Here we create the ground.
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    platforms.create(600, 400, 'ground').setTint(0x888888);
+    platforms.create(100, 300, 'ground').setTint(0x888888);
+    platforms.create(750, 250, 'ground').setTint(0x888888);
 
-    //  Now let's create some ledges
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    // COCHE
+    coche = this.physics.add.staticSprite(80, 520, 'coche');
 
-    // The player and its settings
-    player = this.physics.add.sprite(100, 450, 'dude');
-
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.setBounce(0.2);
+    // PLAYER
+    player = this.physics.add.sprite(200, 450, 'player');
     player.setCollideWorldBounds(true);
+    player.setBounce(0.1);
 
-    //  Our player animations, turning, walking left and walking right.
+    // ANIMACIONES (igual)
     this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1
-    });
-
-    this.anims.create({
-        key: 'turn',
-        frames: [ { key: 'dude', frame: 4 } ],
-        frameRate: 20
     });
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frames: this.anims.generateFrameNumbers('player', { start: 5, end: 8 }),
         frameRate: 10,
         repeat: -1
     });
 
-    //  Input Events
+    this.anims.create({
+        key: 'idle',
+        frames: [{ key: 'player', frame: 4 }],
+        frameRate: 20
+    });
+
     cursors = this.input.keyboard.createCursorKeys();
 
-    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
-    stars = this.physics.add.group({
-        key: 'star',
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 }
-    });
+    // GRUPOS
+    collectibles = this.physics.add.group();
+    fuegos = this.physics.add.group();
 
-    stars.children.iterate(function (child) {
+    // UI
+    gasolinaText = this.add.text(16, 16, '', { fontSize: '18px', fill: '#fff' });
+    llavesText = this.add.text(16, 40, '', { fontSize: '18px', fill: '#fff' });
+    infoText = this.add.text(400, 16, '', { fontSize: '18px', fill: '#fff' }).setOrigin(0.5);
 
-        //  Give each star a slightly different bounce
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
-    });
-
-    bombs = this.physics.add.group();
-
-    //  The score
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-
-    //  Collide the player and the stars with the platforms
+    // COLISIONES
     this.physics.add.collider(player, platforms);
-    this.physics.add.collider(stars, platforms);
-    this.physics.add.collider(bombs, platforms);
+    this.physics.add.collider(collectibles, platforms);
+    this.physics.add.collider(fuegos, platforms);
 
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    this.physics.add.overlap(player, stars, collectStar, null, this);
+    this.physics.add.overlap(player, collectibles, collectItem, null, this);
+    this.physics.add.collider(player, fuegos, hitFire, null, this);
 
-    this.physics.add.collider(player, bombs, hitBomb, null, this);
+repairKey = this.input.keyboard.addKey(
+    Phaser.Input.Keyboard.KeyCodes.X
+);
+
+
+    spawnRound(this);
 }
 
-function update ()
-{
-    if (gameOver)
-    {
-        return;
+function spawnRound(scene) {
+    collectibles.clear(true, true);
+
+    gasolinaCount = 0;
+    llavesCount = 0;
+    repairTimer = 0;
+
+    coche.clearTint();
+
+    if (ronda === 1) {
+        infoText.setText('Recoge gasolina');
+        spawnItems(scene, 'gasolina', 10);
     }
 
-    if (cursors.left.isDown)
-    {
+    if (ronda === 2) {
+        infoText.setText('Recoge llaves');
+        spawnItems(scene, 'llave', 10);
+    }
+
+    if (ronda === 3) {
+        infoText.setText('Gasolina + Llaves y vuelve al coche');
+        spawnItems(scene, 'gasolina', 5);
+        spawnItems(scene, 'llave', 5);
+    }
+
+    gasolinaText.setText(`Gasolina: ${gasolinaCount}`);
+    llavesText.setText(`Llaves: ${llavesCount}`);
+
+    spawnFire(scene);
+}
+
+
+function spawnItems(scene, key, amount) {
+    for (let i = 0; i < amount; i++) {
+        let item = collectibles.create(
+            12 + i * 70,
+            0,
+            key
+        );
+        item.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        item.setScale(0.5);
+        item.itemType = key;
+    }
+}
+
+function collectItem(player, item) {
+    item.disableBody(true, true);
+
+    if (item.itemType === 'gasolina') gasolinaCount++;
+    if (item.itemType === 'llave') llavesCount++;
+
+    gasolinaText.setText(`Gasolina: ${gasolinaCount}`);
+    llavesText.setText(`Llaves: ${llavesCount}`);
+
+    if (collectibles.countActive(true) === 0) {
+        if (ronda < 3) {
+            ronda++;
+            spawnRound(player.scene);
+        } else {
+            infoText.setText('Vuelve al coche');
+            coche.setTint(0x00ff00);
+        }
+    }
+}
+
+
+
+function update(time, delta) {
+    if (gameOver) return;
+
+    // Movimiento
+    if (cursors.left.isDown) {
         player.setVelocityX(-160);
-
         player.anims.play('left', true);
-    }
-    else if (cursors.right.isDown)
-    {
+    } else if (cursors.right.isDown) {
         player.setVelocityX(160);
-
         player.anims.play('right', true);
-    }
-    else
-    {
+    } else {
         player.setVelocityX(0);
-
-        player.anims.play('turn');
+        player.anims.play('idle');
     }
 
-    if (cursors.up.isDown && player.body.touching.down)
-    {
-        player.setVelocityY(-330);
+    if (cursors.up.isDown && player.body.touching.down) {
+        player.setVelocityY(-420);
+    }
+
+    // Reparar coche
+    // Reparar coche
+if (ronda === 3 && gasolinaCount >= 5 && llavesCount >= 5) {
+
+    if (Phaser.Geom.Intersects.RectangleToRectangle(
+        player.getBounds(),
+        coche.getBounds()
+    )) {
+
+        infoText.setText(`Pulsa X para reparar (${Math.floor(repairTimer / 30)}%)`);
+
+        if (repairKey.isDown) {
+            repairTimer += delta / 30;
+
+            if (repairTimer >= 100) {
+                completeRepair();
+            }
+        } else {
+            repairTimer = 0;
+        }
+
+    } else {
+        infoText.setText('Vuelve al coche');
+    }
+
+}
+else {
+        infoText.setText('');
     }
 }
+function completeRepair() {
+    ronda = 1;
+    gasolinaCount = 0;
+    llavesCount = 0;
+    repairTimer = 0;
 
-function collectStar (player, star)
-{
-    star.disableBody(true, true);
+    infoText.setText('¡Coche reparado!');
+    coche.clearTint();
 
-    //  Add and update the score
-    score += 10;
-    scoreText.setText('Score: ' + score);
+    player.setPosition(200, 450);
 
-    if (stars.countActive(true) === 0)
-    {
-        //  A new batch of stars to collect
-        stars.children.iterate(function (child) {
-
-            child.enableBody(true, child.x, 0, true, true);
-
-        });
-
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-        var bomb = bombs.create(x, 16, 'bomb');
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.allowGravity = false;
-
-    }
+    spawnRound(player.scene);
 }
 
-function hitBomb (player, bomb)
-{
+
+function spawnFire(scene) {
+    let fire = fuegos.create(
+        Phaser.Math.Between(100, 700),
+        16,
+        'fuego'
+    );
+
+    fire.setScale(0.5);
+    fire.setBounce(1);
+    fire.setVelocity(Phaser.Math.Between(-80, 80), 20);
+    fire.setCollideWorldBounds(true);
+    fire.allowGravity = false;
+}
+
+function hitFire() {
     this.physics.pause();
-
     player.setTint(0xff0000);
-
-    player.anims.play('turn');
-
     gameOver = true;
+    infoText.setText('GAME OVER');
 }

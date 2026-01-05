@@ -1,16 +1,67 @@
-<!doctype html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 10</title>
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
-    <style type="text/css">
-        body {
-            margin: 0;
-        }
-    </style>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Delta Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Phaser -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
+
+  <!-- Fuente -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
-<body>
-    <script src="./main.js"></script>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- AQUÍ LUEGO IRÁ TU NAV -->
+
+  <!-- CONTENIDO -->
+  <main class="flex-1 flex items-center justify-center px-6 py-20">
+
+    <!-- CONTENEDOR DEL JUEGO -->
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
+
+      <!-- HEADER DEL JUEGO (opcional, queda muy pro) -->
+      <div class="mb-4 text-center">
+        <h1 class="text-xl font-semibold tracking-widest uppercase">
+          Delta Game
+        </h1>
+        <p class="text-sm text-gray-500">
+          Prototype · Phaser 3
+        </p>
+      </div>
+
+      <!-- WRAPPER DEL CANVAS -->
+      <div
+        id="game-container"
+        class="flex items-center justify-center bg-gray-50
+               border border-gray-200 rounded-xl overflow-hidden"
+        style="width: 800px; height: 600px;"
+      >
+        <!-- Phaser inyecta aquí el canvas -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- AQUÍ LUEGO IRÁ TU FOOTER -->
+
+  <!-- TU JUEGO -->
+  <script src="./main.js"></script>
+
 </body>
 </html>

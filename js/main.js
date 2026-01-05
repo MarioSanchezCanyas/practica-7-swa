@@ -375,6 +375,26 @@ function applyFilters() {
   renderProducts(filteredProducts);
 }
 
+const container = document.querySelector('.group');
+const img = document.getElementById('helmet-main');
+
+if (container && img) {
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    img.style.transformOrigin = `${x}% ${y}%`;
+    img.style.transform = 'scale(1.6)';
+  });
+
+  container.addEventListener('mouseleave', () => {
+    img.style.transformOrigin = 'center';
+    img.style.transform = 'scale(1)';
+  });
+}
+
+
 function renderMotos(products, limit = 5) {
   const container = document.getElementById('featured-products');
   if (!container) return;
@@ -437,6 +457,77 @@ function renderMotos(products, limit = 5) {
     </div>
   `;
 }
+
+// ===============================
+// FORMULARIO CONTACTO
+// ===============================
+const form = document.getElementById('contact-form');
+
+if (form) {
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const messageInput = document.getElementById('message');
+
+  const errorName = document.getElementById('error-name');
+  const errorEmail = document.getElementById('error-email');
+  const successMsg = document.getElementById('success-msg');
+
+  function validateName() {
+    if (nameInput.value.trim() === '') {
+      errorName.classList.remove('hidden');
+      nameInput.classList.add('border-red-500');
+      return false;
+    }
+    errorName.classList.add('hidden');
+    nameInput.classList.remove('border-red-500');
+    return true;
+  }
+
+  function validateEmail() {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(emailInput.value.trim())) {
+      errorEmail.classList.remove('hidden');
+      emailInput.classList.add('border-red-500');
+      return false;
+    }
+    errorEmail.classList.add('hidden');
+    emailInput.classList.remove('border-red-500');
+    return true;
+  }
+
+  // Validación en tiempo real
+  nameInput.addEventListener('input', validateName);
+  emailInput.addEventListener('input', validateEmail);
+
+  // Submit
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const isValid = validateName() & validateEmail();
+    if (!isValid) return;
+
+    const formData = {
+      name: nameInput.value.trim(),
+      email: emailInput.value.trim(),
+      message: messageInput.value.trim() || null,
+      date: new Date().toISOString()
+    };
+
+    const stored =
+      JSON.parse(localStorage.getItem('contactMessages')) || [];
+
+    stored.push(formData);
+    localStorage.setItem('contactMessages', JSON.stringify(stored));
+
+    form.reset();
+    successMsg.classList.remove('hidden');
+
+    setTimeout(() => {
+      successMsg.classList.add('hidden');
+    }, 3000);
+  });
+}
+
 
 
 // ===============================
