@@ -246,23 +246,28 @@ function renderHelmetColors() {
   `).join('');
 }
 
+let fadeTimeout = null;
+
 function updateHelmetImage() {
   const color = currentHelmet.colors[helmetColorIndex];
   const mainImg = document.getElementById('helmet-main');
   const thumbs = document.getElementById('helmet-thumbs');
 
-  // FADE OUT
+  // cancelar fade anterior si existe
+  if (fadeTimeout) clearTimeout(fadeTimeout);
+
+  // fade out
   mainImg.style.opacity = 0;
 
-  setTimeout(() => {
-    // Cambiamos la imagen
+  fadeTimeout = setTimeout(() => {
     mainImg.src = color.images[helmetImageIndex];
 
-    // FADE IN
-    mainImg.style.opacity = 1;
+    // cuando la imagen cargue → fade in
+    mainImg.onload = () => {
+      mainImg.style.opacity = 1;
+    };
   }, 200);
 
-  // thumbnails (sin fade)
   thumbs.innerHTML = color.images.map((img, i) => `
     <img
       src="${img}"
@@ -272,6 +277,7 @@ function updateHelmetImage() {
     />
   `).join('');
 }
+
 
 function setHelmetColor(index) {
   helmetColorIndex = index;
@@ -402,9 +408,9 @@ function renderMotos(products, limit = 5) {
   const list = products.slice(0, limit);
 
   container.innerHTML = `
-<div class="max-w-screen-2xl mx-auto px-6 py-32 space-y-14">
+<div class="max-w-screen-2xl mx-auto px-6 py-32 space-y-14 mx-12">
       ${list.map(product => `
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm
+        <div class="bg-blue-50 border border-gray-200 rounded-xl shadow-sm
                     grid grid-cols-1 lg:grid-cols-2 gap-16 items-center
                     p-14">
 

@@ -121,7 +121,7 @@
   "products": [
     {
       "id": 11,
-      "model": "Shoei Glamster 06",
+      "model": "Arai Quantic",
       "price": 529,
       "description": "Casco integral retro premium con máxima seguridad y confort.",
       "rating": 4.8,
@@ -135,16 +135,16 @@
           "name": "Negro Mate",
           "code": "#000000",
           "images": [
-            "/img/arai1_1.png",
-            "/img/arai1_2.png"
+            "/img/arai1_2.png",
+            "/img/arai1_1.png"
           ]
         },
         {
           "name": "Blanco",
           "code": "#ffffff",
           "images": [
-            "/img/arai2_1.png",
-            "/img/arai2_2.png"
+            "/img/arai2_2.png",
+            "/img/arai2_1.png"
           ]
         },
         {
