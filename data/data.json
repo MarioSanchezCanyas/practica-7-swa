@@ -68,103 +68,96 @@
       ]
     },
     {
-      "id": "motos",
-      "name": "Motos",
-      "theme": "light",
-      "products": [
-        {
-          "id": 6,
-          "model": "Suzuki GSX-R1000 ",
-          "price": 12000,
-          "description": "Deportiva japonesa de alto rendimiento",
-          "promo": "A",
-          "image": "img/suzuki.png"
-        },
-        {
-          "id": 7,
-          "model": "Ducati 999R",
-          "price": 25000,
-          "description": "Superbike italiana exclusiva",
-          "promo": "A",
-          "image": "img/ducati.png"
-        },
-        {
-          "id": 8,
-          "model": "Kawasaki Ninja ZX-10R",
-          "price": 8000,
-          "description": "Deportiva japonesa avanzada",
-          "promo": "A",
-          "image": "img/kawasaki.png"
-        },
-        {
-          "id": 9,
-          "model": "BMW Motorrad K1200S",
-          "price": 5500,
-          "description": "Touring deportiva de lujo",
-          "promo": "A",
-          "image": "img/bmw.png"
-        },
-        {
-          "id": 10,
-          "model": "Triumph Daytona 650",
-          "price": 9000,
-          "description": "Deportiva británica clásica",
-          "promo": "A",
-          "image": "img/triumph.png"
-        }
-      ]
+  "id": "motos",
+  "name": "Motos",
+  "theme": "light",
+  "products": [
+    {
+      "id": 6,
+      "model": "Suzuki GSX-R1000",
+      "price": 12000,
+      "description": "Deportiva japonesa de alto rendimiento diseñada para ofrecer una experiencia extrema tanto en circuito como en carretera. Combina potencia, precisión y fiabilidad con un diseño agresivo y aerodinámico.",
+      "promo": "Potencia de competición con tecnología de MotoGP",
+      "image": "img/suzuki.png"
     },
     {
-      "id": "Cascos",
-      "name": "Cascos",
-      "theme": "light",
-      "products": [
+      "id": 7,
+      "model": "Ducati 999R",
+      "price": 25000,
+      "description": "Superbike italiana exclusiva fabricada para los amantes de la ingeniería pura y el diseño radical. Su motor y chasis ofrecen sensaciones únicas, pensadas para conducción deportiva de alto nivel.",
+      "promo": "Edición exclusiva para auténticos apasionados",
+      "image": "img/ducati.png"
+    },
+    {
+      "id": 8,
+      "model": "Kawasaki Ninja ZX-10R",
+      "price": 8000,
+      "description": "Deportiva japonesa avanzada que destaca por su equilibrio entre potencia, control y electrónica de última generación. Ideal para pilotos que buscan rendimiento extremo con máxima seguridad.",
+      "promo": "Rendimiento extremo con control absoluto",
+      "image": "img/kawasaki.png"
+    },
+    {
+      "id": 9,
+      "model": "BMW Motorrad K1200S",
+      "price": 5500,
+      "description": "Touring deportiva de lujo pensada para largos recorridos sin renunciar a la velocidad. Ofrece una conducción cómoda, estable y potente, con el sello de calidad e innovación de BMW.",
+      "promo": "Confort premium para viajar a gran velocidad",
+      "image": "img/bmw.png"
+    },
+    {
+      "id": 10,
+      "model": "Triumph Daytona 650",
+      "price": 9000,
+      "description": "Deportiva británica clásica que combina carácter, diseño elegante y un comportamiento dinámico muy equilibrado. Perfecta para quienes buscan personalidad y rendimiento en una sola moto.",
+      "promo": "Estilo británico con espíritu deportivo",
+      "image": "img/triumph.png"
+    }
+  ]
+},
+    {
+  "id": "cascos",
+  "name": "Cascos",
+  "theme": "light",
+  "products": [
+    {
+      "id": 11,
+      "model": "Shoei Glamster 06",
+      "price": 529,
+      "description": "Casco integral retro premium con máxima seguridad y confort.",
+      "rating": 4.8,
+      "stock": 3,
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "homologation": "ECE 22.06",
+      "weight": "1350g",
+      "material": "Fibra orgánica AIM",
+      "colors": [
         {
-          "id": 11,
-          "model": "Shoei NXR 2",
-          "price": 47000,
-          "description": "Casco integral de alta gama",
-          "rating": 4.6,
-          "stock": 5,
-          "images": ["img/shoei.png", "img/shoei2.png", "img/shoei3.png"]
+          "name": "Negro Mate",
+          "code": "#000000",
+          "images": [
+            "/img/arai1_1.png",
+            "/img/arai1_2.png"
+          ]
         },
         {
-          "id": 12,
-          "model": "Arai Quantic",
-          "price": 72000,
-          "description": "Casco integral premium",
-          "rating": 4.7,
-          "stock": 4,
-          "images": ["img/arai.png", "img/arai2.png", "img/arai3.png"]
+          "name": "Blanco",
+          "code": "#ffffff",
+          "images": [
+            "/img/arai2_1.png",
+            "/img/arai2_2.png"
+          ]
         },
         {
-          "id": 13,
-          "model": "Bell Lithium",
-          "price": 35000,
-          "description": "Casco modular ligero",
-          "rating": 4.5,
-          "stock": 7,
-          "images": ["img/bell.png", "img/bell2.png", "img/bell3.png"]
-        },
-        {
-          "id": 14,
-          "model": "Schuberth S3",
-          "price": 110000,
-          "description": "Casco integral de lujo",
-          "rating": 4.9,
-          "stock": 2,
-          "images": ["img/schuberth.png", "img/schuberth2.png", "img/schuberth3.png"]
-        },
-        {
-          "id": 15,
-          "model": "AGV K6 S",
-          "price": 40000,
-          "description": "SUV compacto premium",
-          "rating": 4.5,
-          "stock": 6,
-          "images": ["img/agv.png", "img/agv2.png", "img/agv3.png"]
+          "name": "Gris",
+          "code": "#9ca3af",
+          "images": [
+            "/img/arai3_1.png",
+            "/img/arai3_2.png"
+          ]
         }
       ]
     }
+  ]
+}
   ]
 }

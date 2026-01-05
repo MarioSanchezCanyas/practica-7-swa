@@ -38,11 +38,31 @@
   <div class="relative flex items-center gap-6">
 
     <!-- Carrito -->
-    <a href="cart.html" class="hover:text-gray-600">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
-      </svg>
-    </a>
+<!-- Carrito -->
+<a href="cart.html" class="relative hover:text-gray-600">
+
+  <!-- ICONO -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="22" height="22"
+       fill="currentColor"
+       viewBox="0 0 16 16">
+    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
+  </svg>
+
+  <!-- CONTADOR -->
+  <span
+    id="cart-count"
+    class="absolute -top-2 -right-2
+           bg-red-600 text-white
+           text-[10px] font-bold
+           w-5 h-5 rounded-full
+           flex items-center justify-center
+           hidden">
+    0
+  </span>
+
+</a>
+
 
     <!-- Burger -->
     <button id="menu-btn" class="hover:text-gray-600">
@@ -50,112 +70,157 @@
     </button>
 
     <!-- Dropdown -->
-    <div id="menu"
-      class="hidden absolute right-0 top-10 w-40 bg-white border border-gray-200 shadow-md text-sm uppercase tracking-widest">
-      <a href="#" class="block px-4 py-3 hover:bg-gray-100">BMW</a>
-      <a href="#" class="block px-4 py-3 hover:bg-gray-100">Audi</a>
-      <a href="#" class="block px-4 py-3 hover:bg-gray-100">Mercedes</a>
-    </div>
+<div
+  id="menu"
+  class="hidden absolute right-0 top-12 w-48 bg-white border border-gray-200 shadow-lg
+         text-sm uppercase tracking-widest z-50"
+>
+  <a href="index.html" class="block px-5 py-3 hover:bg-gray-100">
+    Home
+  </a>
+  <a href="categoria1.html" class="block px-5 py-3 hover:bg-gray-100">
+    Coches
+  </a>
+  <a href="categoria2.html" class="block px-5 py-3 hover:bg-gray-100">
+    Motos
+  </a>
+  <a href="categoria3.html" class="block px-5 py-3 hover:bg-gray-100">
+    Cascos
+  </a>
+  <a href="cart.html" class="block px-5 py-3 hover:bg-gray-100 border-t border-gray-200">
+    Carrito
+  </a>
+</div>
+
   </div>
 </nav>
 
 <!-- SLIDER DE COCHES (FIJO Y MODERNO) -->
-<section class="w-full mt-16">
-  <div class="max-w-7xl mx-auto px-10 relative">
+<!-- HERO / SLIDER -->
+<section class="w-full mt-8 mb-20">
+  <div class="max-w-7xl mx-auto px-10 w-full">
 
-    <!-- Contenedor -->
-    <div class="relative h-[520px] overflow-hidden">
+<div class="relative h-[420px] overflow-hidden flex items-center justify-center">
 
       <!-- Slide 1 -->
       <div class="slide absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 opacity-100">
-        <img src="img/portada.png"
-             class="w-full max-w-6xl object-contain" />
-        <p class="mt-10 text-sm uppercase tracking-widest text-gray-500">
-          BMW M5 · Performance
-        </p>
+        <img
+  src="img/portada.png"
+  class="w-full max-w-5xl object-contain"
+/>
       </div>
 
       <!-- Slide 2 -->
       <div class="slide absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 opacity-0">
-        <img src="img/portada2.png"
-             class="w-full max-w-6xl object-contain" />
-        <p class="mt-10 text-sm uppercase tracking-widest text-gray-500">
-          Lexus X
-        </p>
+        <img
+          src="img/portada2.png"
+          class="w-full max-w-6xl object-contain"
+        />
+
       </div>
 
       <!-- Slide 3 -->
       <div class="slide absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 opacity-0">
-        <img src="img/portada3.png"
-             class="w-full max-w-6xl object-contain" />
-        <p class="mt-10 text-sm uppercase tracking-widest text-gray-500">
-          Lexus Y
-        </p>
+        <img
+          src="img/portada3.png"
+          class="w-full max-w-6xl object-contain"
+        />
+
       </div>
 
+      <!-- Flechas -->
+      <button id="prev"
+        class="absolute left-0 top-1/2 -translate-y-1/2 text-4xl text-gray-300 hover:text-black transition">
+        ‹
+      </button>
+
+      <button id="next"
+        class="absolute right-0 top-1/2 -translate-y-1/2 text-4xl text-gray-300 hover:text-black transition">
+        ›
+      </button>
 
     </div>
 
-    <!-- Flecha izquierda -->
-    <button id="prev"
-      class="absolute left-0 top-1/2 -translate-y-1/2 text-3xl text-gray-400 hover:text-black transition">
-      ‹
-    </button>
 
-    <!-- Flecha derecha -->
-    <button id="next"
-      class="absolute right-0 top-1/2 -translate-y-1/2 text-3xl text-gray-400 hover:text-black transition">
-      ›
-    </button>
+
+<!-- CATEGORÍAS (ABAJO, ESTILO LEXUS) -->
+    <!-- CATEGORÍAS -->
+<!-- CATEGORÍAS -->
+<!-- CATEGORÍAS -->
+<section class="w-full mt-6 border-t border-gray-200">
+  <div class="max-w-7xl mx-auto px-10 py-6">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+      <!-- COCHES -->
+      <a href="categoria1.html" class="group block">
+        <div class="flex flex-col h-full justify-between py-4">
+
+          <!-- CONTENIDO -->
+          <div>
+            <h3 class="text-lg tracking-widest uppercase mb-2 transition-colors group-hover:text-black">
+              Coches
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Deportividad, lujo y rendimiento en cada modelo
+            </p>
+          </div>
+
+          <!-- LÍNEA -->
+          <div class="mt-6 h-[2px] w-full bg-gray-200 transition-all duration-300
+                      group-hover:bg-black">
+          </div>
+
+        </div>
+      </a>
+
+      <!-- MOTOS -->
+      <a href="categoria2.html" class="group block">
+        <div class="flex flex-col h-full justify-between py-4">
+
+          <div>
+            <h3 class="text-lg tracking-widest uppercase mb-2 transition-colors group-hover:text-black">
+              Motos
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Potencia y precisión para una conducción extrema
+            </p>
+          </div>
+
+          <div class="mt-6 h-[2px] w-full bg-gray-200 transition-all duration-300
+                      group-hover:bg-black">
+          </div>
+
+        </div>
+      </a>
+
+      <!-- CASCOS -->
+      <a href="categoria3.html" class="group block">
+        <div class="flex flex-col h-full justify-between py-4">
+
+          <div>
+            <h3 class="text-lg tracking-widest uppercase mb-2 transition-colors group-hover:text-black">
+              Cascos
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Seguridad, diseño y tecnología avanzada
+            </p>
+          </div>
+
+          <div class="mt-6 h-[2px] w-full bg-gray-200 transition-all duration-300
+                      group-hover:bg-black">
+          </div>
+
+        </div>
+      </a>
+
+    </div>
 
   </div>
 </section>
 
 
 
-<!-- CATEGORÍAS (ABAJO, ESTILO LEXUS) -->
-<section class="w-full mt-16 border-t border-gray-200">
-  <div class="max-w-7xl mx-auto px-10 py-16">
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-
-      <!-- BMW -->
-      <a href="categoria1.html" class="group">
-        <div class="border-b pb-6 transition-all duration-300 group-hover:border-black">
-          <h3 class="text-lg tracking-widest uppercase mb-2">
-            BMW
-          </h3>
-          <p class="text-sm text-gray-500 transition-colors group-hover:text-black">
-            Deportividad alemana
-          </p>
-        </div>
-      </a>
-
-      <!-- Audi -->
-      <a href="categoria2.html" class="group">
-        <div class="border-b pb-6 transition-all duration-300 group-hover:border-black">
-          <h3 class="text-lg tracking-widest uppercase mb-2">
-            Audi
-          </h3>
-          <p class="text-sm text-gray-500 transition-colors group-hover:text-black">
-            Tecnología y diseño
-          </p>
-        </div>
-      </a>
-
-      <!-- Mercedes -->
-      <a href="categoria3.html" class="group">
-        <div class="border-b pb-6 transition-all duration-300 group-hover:border-black">
-          <h3 class="text-lg tracking-widest uppercase mb-2">
-            Mercedes
-          </h3>
-          <p class="text-sm text-gray-500 transition-colors group-hover:text-black">
-            Lujo y confort
-          </p>
-        </div>
-      </a>
-
-    </div>
   </div>
 </section>
 
@@ -164,39 +229,6 @@
 <footer class="border-t border-gray-200 py-10 text-center text-sm text-gray-500 mt-auto">
   © 2026 Delta Cars · Diseño moderno
 </footer>
-
-<!-- JS dropdown -->
-<script>
-  const btn = document.getElementById("menu-btn");
-  const menu = document.getElementById("menu");
-
-  btn.addEventListener("click", () => {
-    menu.classList.toggle("hidden");
-  });
-</script>
-
-<script>
-  const slides = document.querySelectorAll('.slide');
-  let current = 0;
-
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('opacity-100', i === index);
-      slide.classList.toggle('opacity-0', i !== index);
-    });
-  }
-
-  document.getElementById('next').addEventListener('click', () => {
-    current = (current + 1) % slides.length;
-    showSlide(current);
-  });
-
-  document.getElementById('prev').addEventListener('click', () => {
-    current = (current - 1 + slides.length) % slides.length;
-    showSlide(current);
-  });
-</script>
-
 
 <script src="js/logo3d.js"></script>
 <script src="js/main.js"></script>

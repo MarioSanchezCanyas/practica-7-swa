@@ -4,10 +4,68 @@
 let allProducts = [];
 let filteredProducts = [];
 const slidersState = {}; // estado de cada slider por producto
+let helmetSize = null;
+
+// ===============================
+// ESTADO CASCOS (DETALLE)
+// ===============================
+let currentHelmet = null;
+let helmetColorIndex = 0;
+let helmetImageIndex = 0;
 
 // ===============================
 // RENDER CARDS
 // ===============================
+
+function burgerMenu() {
+  const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("menu");
+
+  if (!btn || !menu) return;
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", () => {
+    menu.classList.add("hidden");
+  });
+
+  menu.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+}
+
+function heroSlider() {
+  const slides = document.querySelectorAll('.slide');
+  const next = document.getElementById('next');
+  const prev = document.getElementById('prev');
+
+  if (!slides.length || !next || !prev) return;
+
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('opacity-100', i === index);
+      slide.classList.toggle('opacity-0', i !== index);
+    });
+  }
+
+  next.addEventListener('click', () => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  });
+
+  prev.addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  });
+}
+
+
+
 function renderProducts(products) {
   const container = document.getElementById('products');
   container.innerHTML = '';
@@ -29,14 +87,14 @@ function renderProducts(products) {
       <div class="bg-white border border-gray-200 flex flex-col">
 
         <!-- SLIDER -->
-        <div class="relative bg-gray-50 px-6 py-8 flex justify-center">
+<div class="relative bg-gray-50 aspect-[16/9] overflow-hidden">
 
-          <img 
-            id="img-${p.id}"
-            src="${p.images[0]}"
-            alt="${p.model}"
-            class="max-h-40 object-contain transition-all duration-300"
-          />
+<img 
+  id="img-${p.id}"
+  src="${p.images[0]}"
+  alt="${p.model}"
+  class="w-full h-full object-cover"
+/>
 
           <!-- Flecha izquierda -->
           <button
@@ -81,9 +139,14 @@ function renderProducts(products) {
           <!-- ACCIONES -->
           <div class="mt-auto flex gap-3">
             <button
-              onclick='addToCart(${JSON.stringify(p)})'
-              class="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white uppercase tracking-widest text-sm py-4 hover:brightness-110 transition">
-              Solicitar
+              onclick='addToCart({
+                id: ${p.id},
+                model: "${p.model}",
+                price: ${p.price},
+                image: "${p.images[0]}"
+              })'
+              class="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white">
+              Comprar
             </button>
 
             <button
@@ -98,6 +161,146 @@ function renderProducts(products) {
     updateSlider(p.id); // bloquea flechas iniciales
   });
 }
+function renderHelmetSizes() {
+  const container = document.getElementById('helmet-sizes');
+  if (!container || !currentHelmet.sizes) return;
+
+container.innerHTML = currentHelmet.sizes.map(size => `
+  <button
+    onclick="setHelmetSize('${size}')"
+    class="px-4 py-2 border uppercase tracking-widest text-sm
+      ${helmetSize === size
+        ? 'border-black bg-black text-white'
+        : 'border-gray-300 text-gray-600 hover:bg-gray-100'}">
+    ${size}
+  </button>
+`).join('');
+
+}
+
+function renderHelmetAttributes() {
+  const el = document.getElementById('helmet-attrs');
+  if (!el || !currentHelmet) return;
+
+  el.innerHTML = `
+    <li><strong>Homologación:</strong> ${currentHelmet.homologation}</li>
+    <li><strong>Peso:</strong> ${currentHelmet.weight}</li>
+    <li><strong>Material:</strong> ${currentHelmet.material}</li>
+  `;
+}
+
+function setHelmetSize(size) {
+  helmetSize = size;
+  renderHelmetSizes();
+}
+
+
+function renderHelmetDetail(helmet) {
+  if (!helmet || !helmet.colors) return;
+
+  currentHelmet = helmet;
+  helmetColorIndex = 0;
+  helmetImageIndex = 0;
+helmetSize = helmet.sizes.includes('XL')
+  ? 'XL'
+  : helmet.sizes[0];
+
+
+  document.getElementById('helmet-model').textContent = helmet.model;
+  document.getElementById('helmet-desc').textContent = helmet.description;
+  document.getElementById('helmet-price').textContent = helmet.price;
+
+  renderHelmetColors();
+  updateHelmetImage();
+  renderHelmetSizes();
+  renderHelmetAttributes();
+}
+
+function addHelmetToCart() {
+
+  const color = currentHelmet.colors[helmetColorIndex];
+
+  const productForCart = {
+    id: `${currentHelmet.id}-${helmetColorIndex}-${helmetSize}`,
+    model: currentHelmet.model,
+    price: currentHelmet.price,
+    image: color.images[helmetImageIndex],
+    color: color.name,
+    size: helmetSize
+  };
+
+  addToCart(productForCart);
+}
+
+function renderHelmetColors() {
+  const container = document.getElementById('helmet-colors');
+  if (!container) return;
+
+  container.innerHTML = currentHelmet.colors.map((color, index) => `
+    <button
+      onclick="setHelmetColor(${index})"
+      style="background:${color.code}"
+      class="w-10 h-10 rounded-full border-2
+             ${index === helmetColorIndex ? 'border-black' : 'border-gray-300'}">
+    </button>
+  `).join('');
+}
+
+function updateHelmetImage() {
+  const color = currentHelmet.colors[helmetColorIndex];
+  const mainImg = document.getElementById('helmet-main');
+  const thumbs = document.getElementById('helmet-thumbs');
+
+  // FADE OUT
+  mainImg.style.opacity = 0;
+
+  setTimeout(() => {
+    // Cambiamos la imagen
+    mainImg.src = color.images[helmetImageIndex];
+
+    // FADE IN
+    mainImg.style.opacity = 1;
+  }, 200);
+
+  // thumbnails (sin fade)
+  thumbs.innerHTML = color.images.map((img, i) => `
+    <img
+      src="${img}"
+      onclick="setHelmetImage(${i})"
+      class="w-20 h-20 object-contain cursor-pointer border
+             ${i === helmetImageIndex ? 'border-black' : 'border-gray-200'}"
+    />
+  `).join('');
+}
+
+function setHelmetColor(index) {
+  helmetColorIndex = index;
+  helmetImageIndex = 0;
+  renderHelmetColors();
+  updateHelmetImage();
+}
+
+function setHelmetImage(index) {
+  helmetImageIndex = index;
+  updateHelmetImage();
+}
+
+function nextHelmetImage() {
+  const images = currentHelmet.colors[helmetColorIndex].images;
+  if (helmetImageIndex < images.length - 1) {
+    helmetImageIndex++;
+    updateHelmetImage();
+  }
+}
+
+function prevHelmetImage() {
+  if (helmetImageIndex > 0) {
+    helmetImageIndex--;
+    updateHelmetImage();
+  }
+}
+
+
 
 // ===============================
 // SLIDER CLÁSICO (NO INFINITO)
@@ -178,51 +381,61 @@ function renderMotos(products, limit = 5) {
 
   const list = products.slice(0, limit);
 
-  container.innerHTML = list.map((product, index) => `
-    <div class="max-w-7xl mx-auto px-10 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      
-      <!-- INFO -->
-      <div>
-        ${index === 0 ? '<hr class="mb-8 w-24 border-gray-300">' : ''}
+  container.innerHTML = `
+<div class="max-w-screen-2xl mx-auto px-6 py-32 space-y-14">
+      ${list.map(product => `
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm
+                    grid grid-cols-1 lg:grid-cols-2 gap-16 items-center
+                    p-14">
 
-        <h2 class="text-4xl font-bold tracking-wide mb-8">
-          ${product.model}
-        </h2>
+          <!-- INFO -->
+          <div>
+            <h2 class="text-4xl font-bold tracking-wide mb-8">
+              ${product.model}
+            </h2>
 
-        <p class="text-gray-600 leading-relaxed max-w-lg mb-12">
-          ${product.description}
-        </p>
+            <p class="text-gray-600 leading-relaxed max-w-lg mb-10">
+              ${product.description}
+            </p>
 
-        <div class="border-t border-gray-300 w-24 mb-10"></div>
+            <div class="flex items-end gap-6 mb-6">
+              <span class="text-lg font-semibold">Precio:</span>
+              <span class="text-4xl font-bold">
+                ${product.price.toLocaleString()} €
+              </span>
+            </div>
 
-        <div class="flex items-end gap-6 mb-4">
-          <span class="text-lg font-semibold">Precio:</span>
-          <span class="text-4xl font-bold">
-            ${product.price.toLocaleString()} €
-          </span>
+            ${
+              product.promo
+                ? `<p class="text-red-600 font-semibold uppercase text-sm tracking-widest mb-8">
+                    ${product.promo}
+                  </p>`
+                : `<div class="mb-8"></div>`
+            }
+
+            <!-- BOTÓN -->
+            <button
+              onclick='addToCart(${JSON.stringify(product)})'
+              class="bg-red-600 hover:bg-red-700 text-white
+                     uppercase tracking-widest text-sm
+                     px-10 py-4 transition">
+              Comprar
+            </button>
+          </div>
+
+          <!-- IMAGEN -->
+          <div class="flex justify-center">
+            <img
+              src="${product.image}"
+              alt="${product.model}"
+              class="max-h-[420px] object-contain"
+            />
+          </div>
+
         </div>
-
-        ${
-          product.promo
-            ? `<p class="text-red-600 font-semibold uppercase text-sm tracking-widest">
-                ${product.promo}
-              </p>`
-            : ''
-        }
-      </div>
-
-      <!-- IMAGEN -->
-      <div class="relative flex justify-center">
-        <img
-          src="${product.image}"
-          alt="${product.model}"
-          class="max-h-[420px] object-contain"
-        />
-      </div>
+      `).join('')}
     </div>
-
-    ${index < list.length - 1 ? '<hr class="max-w-5xl mx-auto border-gray-200">' : ''}
-  `).join('');
+  `;
 }
 
 
@@ -231,6 +444,9 @@ function renderMotos(products, limit = 5) {
 // ===============================
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  burgerMenu()
+  heroSlider();
   const categoryId = document.body.dataset.category;
 
   fetch('data/data.json')
@@ -251,6 +467,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (document.getElementById('featured-products')) {
         renderMotos(category.products, 5);
       }
+
+      if (document.getElementById('helmet-main')) {
+        renderHelmetDetail(category.products[0]);
+      }
+
+      if (document.getElementById('helmet-main')) {
+        renderHelmetDetail(category.products[0]);
+      }
     });
 
   // filtros SOLO si existen
@@ -262,16 +486,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // swiper SOLO si existe
   if (document.querySelector('.motos-swiper')) {
-    new Swiper('.motos-swiper', {
-      loop: true,
-      centeredSlides: true,
-      slidesPerView: 3,
-      spaceBetween: 80,
-      grabCursor: true,
-      breakpoints: {
-        0: { slidesPerView: 1.3 },
-        768: { slidesPerView: 3 }
-      }
-    });
+new Swiper('.motos-swiper', {
+  loop: true,
+  centeredSlides: true,
+  slidesPerView: 3,
+  spaceBetween: 120, // antes 80
+  grabCursor: true,
+  breakpoints: {
+    0: { slidesPerView: 1.2 },
+    768: { slidesPerView: 3 }
+  }
+});
+
   }
 });

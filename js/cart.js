@@ -14,12 +14,19 @@ function saveCart(cart) {
 // Añadir producto
 function addToCart(product) {
   const cart = getCart();
-  const existing = cart.find(item => item.id === product.id);
+
+  const productId = String(product.id); // 🔑 CLAVE
+
+  const existing = cart.find(item => item.id === productId);
 
   if (existing) {
     existing.quantity += 1;
   } else {
-    cart.push({ ...product, quantity: 1 });
+    cart.push({
+      ...product,
+      id: productId, // 🔑 SIEMPRE STRING
+      quantity: 1
+    });
   }
 
   saveCart(cart);
@@ -27,7 +34,7 @@ function addToCart(product) {
 
 // Eliminar producto
 function removeFromCart(id) {
-  const cart = getCart().filter(item => item.id !== id);
+  const cart = getCart().filter(item => item.id !== String(id));
   saveCart(cart);
   renderCart();
 }
@@ -35,7 +42,7 @@ function removeFromCart(id) {
 // Cambiar cantidad
 function changeQuantity(id, amount) {
   const cart = getCart();
-  const item = cart.find(p => p.id === id);
+  const item = cart.find(p => p.id === String(id));
 
   if (!item) return;
 
@@ -50,6 +57,7 @@ function changeQuantity(id, amount) {
   renderCart();
 }
 
+
 // Total del carrito
 function getTotal() {
   return getCart().reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -59,48 +67,91 @@ function getTotal() {
 function updateCartCount() {
   const count = getCart().reduce((sum, item) => sum + item.quantity, 0);
   const el = document.getElementById('cart-count');
-  if (el) el.textContent = count;
+
+  if (!el) return;
+
+  if (count === 0) {
+    el.classList.add('hidden');
+  } else {
+    el.classList.remove('hidden');
+    el.textContent = count;
+  }
 }
+
 
 // Renderizar carrito (cart.html)
 function renderCart() {
   const container = document.getElementById('cart-items');
-  const totalEl = document.getElementById('cart-total');
+  const subtotalEl = document.getElementById('cart-subtotal');
+  const finalEl = document.getElementById('cart-final');
 
   if (!container) return;
 
   const cart = getCart();
   container.innerHTML = '';
 
+  // 🟡 Carrito vacío
   if (cart.length === 0) {
-    container.innerHTML = `<p class="text-center text-gray-500">Carrito vacío</p>`;
-    totalEl.textContent = '0 €';
+    container.innerHTML =
+      `<p class="text-center text-gray-500">Carrito vacío</p>`;
+
+    if (subtotalEl) subtotalEl.textContent = '0 €';
+    if (finalEl) finalEl.textContent = '0 €';
     return;
   }
 
+  // 🟢 Render productos
   cart.forEach(item => {
     container.innerHTML += `
-      <div class="flex items-center justify-between bg-white p-4 rounded shadow">
-        <img src="${item.image}" class="w-20 h-16 object-cover rounded">
-        
-        <div class="flex-1 px-4">
-          <h3 class="font-bold">${item.model}</h3>
-          <p>${item.price} €</p>
+      <div class="flex items-center w-full bg-white border border-gray-200 rounded-xl px-8 py-5 shadow-sm">
+
+        <!-- Imagen -->
+        <div class="w-32 flex-shrink-0">
+          <img src="${item.image}" class="w-full h-20 object-contain">
         </div>
 
-        <div class="flex items-center gap-2">
-          <button onclick="changeQuantity(${item.id}, -1)" class="px-2 bg-gray-300 rounded">−</button>
-          <span>${item.quantity}</span>
-          <button onclick="changeQuantity(${item.id}, 1)" class="px-2 bg-gray-300 rounded">+</button>
+        <!-- Info -->
+        <div class="flex-1 px-8">
+          <h3 class="text-lg font-semibold">${item.model}</h3>
+
+          ${
+            item.color || item.size
+              ? `
+                <p class="text-sm text-gray-500 mt-1">
+                  ${item.color ? item.color : ''}
+                  ${item.size ? ` · Talla ${item.size}` : ''}
+                </p>
+              `
+              : ''
+          }
+
+          <p class="mt-2 font-medium">${item.price} €</p>
         </div>
 
-        <button onclick="removeFromCart(${item.id})" class="text-red-500 ml-4">✕</button>
+        <!-- Cantidad -->
+        <div class="flex items-center gap-3">
+          <button onclick="changeQuantity('${item.id}', -1)"
+            class="w-9 h-9 rounded-md bg-gray-100 hover:bg-gray-200">−</button>
+
+          <span class="w-6 text-center">${item.quantity}</span>
+
+          <button onclick="changeQuantity('${item.id}', 1)"
+            class="w-9 h-9 rounded-md bg-gray-100 hover:bg-gray-200">+</button>
+        </div>
+
+        <!-- Eliminar -->
+        <button onclick="removeFromCart('${item.id}')"
+          class="ml-8 text-gray-400 hover:text-red-500">✕</button>
       </div>
     `;
   });
 
-  totalEl.textContent = getTotal() + ' €';
+  // 🧮 Totales
+  const total = getTotal();
+  if (subtotalEl) subtotalEl.textContent = total + ' €';
+  if (finalEl) finalEl.textContent = total + ' €';
 }
+
 
 // Inicializar contador
 document.addEventListener('DOMContentLoaded', updateCartCount);

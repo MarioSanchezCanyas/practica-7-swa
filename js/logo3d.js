@@ -2,11 +2,12 @@ const canvas = document.getElementById('logo-canvas');
 
 const illo = new Zdog.Illustration({
   element: canvas,
-  dragRotate: true,
-  zoom: 0.5, // escala todo el logo a un cuarto
+  dragRotate: false, // ⬅️ ya no se puede rotar a mano
+  zoom: 0.5,
   resize: true,
-  background: null, // fondo transparente
+  background: null,
 });
+
 
 
 const logo = new Zdog.Group({ addTo: illo, translate: { x:0, y:10 } });
@@ -14,21 +15,26 @@ const logo = new Zdog.Group({ addTo: illo, translate: { x:0, y:10 } });
 // --------------------
 // CÍRCULO EXTERNO GRIS METÁLICO
 // --------------------
+const silverRings = [];
 const silverShades = ['#D8D8D8', '#C0C0C0', '#A8A8A8'];
+
 silverShades.forEach((shade, i) => {
-  new Zdog.Ellipse({
+  const ring = new Zdog.Ellipse({
     addTo: logo,
-    diameter: 65 + i*2,
+    diameter: 65 + i * 2,
     stroke: 3,
     color: shade,
     translate: { x: 0, y: -10 },
   });
+
+  silverRings.push(ring);
 });
+
 
 // --------------------
 // FONDO INTERIOR DEL CÍRCULO (GRADIENTE AMARILLO)
 // --------------------
-const yellowShades = ['#FFF9C4', '#FFF59D', '#FFF176']; // tonos amarillo claro a dorado
+const yellowShades = ['#ffffffff', '#ffffffff', '#ffffffff']; // tonos amarillo claro a dorado
 yellowShades.forEach((shade, i) => {
   new Zdog.Ellipse({
     addTo: logo,
@@ -70,10 +76,31 @@ redShades.forEach((shade, i) => {
   });
 });
 
+let colorOffset = 0;
+
+function rotateSilverColors() {
+  colorOffset += 0.03;
+
+  silverRings.forEach((ring, i) => {
+    const base = 180 + Math.sin(colorOffset + i) * 40;
+    const gray = Math.floor(base);
+
+    ring.color = `rgb(${gray}, ${gray}, ${gray})`;
+  });
+}
+
+const AUTO_ROTATE_SPEED = 0.003; // velocidad media-baja
+
 // --------------------
 // RENDER
 // --------------------
 function animate() {
+  // rotación automática suave
+  logo.rotate.y += AUTO_ROTATE_SPEED;
+
+  // animación del brillo del anillo
+  rotateSilverColors();
+
   illo.updateRenderGraph();
   requestAnimationFrame(animate);
 }

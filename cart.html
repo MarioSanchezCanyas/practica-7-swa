@@ -10,19 +10,134 @@
 
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
-  <div id="nav"></div>
+<!-- NAVBAR (TU DISEÑO) -->
+<nav class="bg-white w-full h-20 flex items-center justify-between px-10 border-b border-gray-200">
 
-  <main class="flex-1 container mx-auto px-6 py-10 pt-24">
-    <h1 class="text-3xl font-bold mb-6 text-center">Tu carrito</h1>
+  <!-- Logo canvas izquierda -->
+  <div class="flex items-center">
+    <canvas id="logo-canvas" class="w-12 h-12"></canvas>
+  </div>
 
-    <div id="cart-items" class="space-y-4"></div>
+  <!-- Delta centrado -->
+<a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition">
+  <h1 class="text-3xl font-extrabold tracking-wide">Delta</h1>
+  <img src="img/delta.png" alt="Delta logo" class="w-6 h-6">
+</a>
 
-    <div class="text-right mt-6 text-xl font-bold">
-      Total: <span id="cart-total">0 €</span>
-    </div>
-  </main>
+  <!-- Carrito + burger -->
+  <div class="relative flex items-center gap-6">
 
-  <div id="footer"></div>
+    <!-- Carrito -->
+<!-- Carrito -->
+<a href="cart.html" class="relative hover:text-gray-600">
+
+  <!-- ICONO -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="22" height="22"
+       fill="currentColor"
+       viewBox="0 0 16 16">
+    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
+  </svg>
+
+  <!-- CONTADOR -->
+  <span
+    id="cart-count"
+    class="absolute -top-2 -right-2
+           bg-red-600 text-white
+           text-[10px] font-bold
+           w-5 h-5 rounded-full
+           flex items-center justify-center
+           hidden">
+    0
+  </span>
+
+</a>
+
+
+    <!-- Burger -->
+    <button id="menu-btn" class="hover:text-gray-600">
+      ☰
+    </button>
+
+    <!-- Dropdown -->
+<div
+  id="menu"
+  class="hidden absolute right-0 top-12 w-48 bg-white border border-gray-200 shadow-lg
+         text-sm uppercase tracking-widest z-50"
+>
+  <a href="index.html" class="block px-5 py-3 hover:bg-gray-100">
+    Home
+  </a>
+  <a href="categoria1.html" class="block px-5 py-3 hover:bg-gray-100">
+    Coches
+  </a>
+  <a href="categoria2.html" class="block px-5 py-3 hover:bg-gray-100">
+    Motos
+  </a>
+  <a href="categoria3.html" class="block px-5 py-3 hover:bg-gray-100">
+    Cascos
+  </a>
+  <a href="cart.html" class="block px-5 py-3 hover:bg-gray-100 border-t border-gray-200">
+    Carrito
+  </a>
+</div>
+
+  </div>
+</nav>
+
+<main class="flex-1 w-full px-16 py-16">
+
+  <!-- CONTENIDO -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+
+    <!-- LISTA DE PRODUCTOS -->
+    <section class="lg:col-span-2">
+      <div
+        id="cart-items"
+        class="space-y-6"
+      ></div>
+    </section>
+
+    <!-- RESUMEN -->
+    <aside class="bg-white rounded-lg shadow p-6 sticky top-28">
+
+      <h2 class="text-lg font-semibold mb-6">
+        Resumen del pedido
+      </h2>
+
+      <div class="flex justify-between text-sm mb-3">
+        <span class="text-gray-500">Subtotal</span>
+        <span id="cart-subtotal">0 €</span>
+      </div>
+
+      <div class="flex justify-between text-sm mb-3">
+        <span class="text-gray-500">Envío</span>
+        <span>Gratis</span>
+      </div>
+
+      <div class="border-t my-4"></div>
+
+      <div class="flex justify-between text-lg font-semibold mb-6">
+        <span>Total</span>
+        <span id="cart-final">0 €</span>
+      </div>
+
+      <button
+        class="w-full bg-black text-white py-4 uppercase tracking-widest
+               hover:bg-gray-900 transition">
+        Finalizar compra
+      </button>
+
+    </aside>
+
+  </div>
+</main>
+
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-200 py-10 text-center text-sm text-gray-500 mt-auto">
+  © 2026 Delta Cars · Diseño moderno
+</footer>
 
   <script src="js/logo3d.js"></script>
   <script src="js/main.js"></script>

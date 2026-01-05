@@ -1,41 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BMW | CarShop</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cascos | Delta</title>
 
-  <!-- Tailwind (OBLIGATORIO en cada página) -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Zdog si lo usas -->
   <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
 
-  <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body data-category="mercedes" class="bg-gray-100 min-h-screen flex flex-col">
+<body data-category="cascos" class="bg-gray-100">
 
-  <!-- NAV -->
-  <div id="nav"></div>
+<!-- NAVBAR (MISMO QUE LOS OTROS) -->
 
-  <!-- CONTENIDO -->
-  <main class="flex-1 container mx-auto px-6 py-10 pt-24">
-    <h1 class="text-3xl font-bold mb-8 text-center">BMW</h1>
+<!-- NAVBAR (TU DISEÑO) -->
+<nav class="bg-white w-full h-20 flex items-center justify-between px-10 border-b border-gray-200">
 
-    <!-- GRID DE PRODUCTOS -->
-    <div
-      id="products"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-    ></div>
-  </main>
+  <!-- Logo canvas izquierda -->
+  <div class="flex items-center">
+    <canvas id="logo-canvas" class="w-12 h-12"></canvas>
+  </div>
 
-  <!-- FOOTER -->
-  <div id="footer"></div>
+  <!-- Delta centrado -->
+<a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition">
+  <h1 class="text-3xl font-extrabold tracking-wide">Delta</h1>
+  <img src="img/delta.png" alt="Delta logo" class="w-6 h-6">
+</a>
 
-  <!-- JS PRINCIPAL -->
-  <script src="js/logo3d.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/cart.js"></script>
+  <!-- Carrito + burger -->
+  <div class="relative flex items-center gap-6">
+
+    <!-- Carrito -->
+<!-- Carrito -->
+<a href="cart.html" class="relative hover:text-gray-600">
+
+  <!-- ICONO -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="22" height="22"
+       fill="currentColor"
+       viewBox="0 0 16 16">
+    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
+  </svg>
+
+  <!-- CONTADOR -->
+  <span
+    id="cart-count"
+    class="absolute -top-2 -right-2
+           bg-red-600 text-white
+           text-[10px] font-bold
+           w-5 h-5 rounded-full
+           flex items-center justify-center
+           hidden">
+    0
+  </span>
+
+</a>
+
+
+    <!-- Burger -->
+    <button id="menu-btn" class="hover:text-gray-600">
+      ☰
+    </button>
+
+    <!-- Dropdown -->
+<div
+  id="menu"
+  class="hidden absolute right-0 top-12 w-48 bg-white border border-gray-200 shadow-lg
+         text-sm uppercase tracking-widest z-50"
+>
+  <a href="index.html" class="block px-5 py-3 hover:bg-gray-100">
+    Home
+  </a>
+  <a href="categoria1.html" class="block px-5 py-3 hover:bg-gray-100">
+    Coches
+  </a>
+  <a href="categoria2.html" class="block px-5 py-3 hover:bg-gray-100">
+    Motos
+  </a>
+  <a href="categoria3.html" class="block px-5 py-3 hover:bg-gray-100">
+    Cascos
+  </a>
+  <a href="cart.html" class="block px-5 py-3 hover:bg-gray-100 border-t border-gray-200">
+    Carrito
+  </a>
+</div>
+
+  </div>
+</nav>
+<main class="max-w-6xl mx-auto px-8 py-8 grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-16">
+
+  <!-- IMAGEN PRINCIPAL -->
+  <div class="flex">
+    <div class="relative w-full bg-gray-200 border border-gray-300 rounded-xl p-2 flex items-center justify-center">
+
+      <img
+        id="helmet-main"
+        class="max-h-full max-w-full object-contain drop-shadow-lg transition-opacity duration-300"
+      />
+
+      <!-- Flechas -->
+      <button
+        onclick="prevHelmetImage()"
+        class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center">
+        ‹
+      </button>
+
+      <button
+        onclick="nextHelmetImage()"
+        class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center">
+        ›
+      </button>
+
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="flex flex-col justify-between">
+
+    <!-- TEXTO -->
+    <div>
+      <h1 id="helmet-model" class="text-4xl font-bold mb-4"></h1>
+
+      <p id="helmet-desc" class="text-gray-600 mb-6"></p>
+
+      <ul id="helmet-attrs" class="text-sm text-gray-600 space-y-2 mb-4"></ul>
+
+      <div class="text-4xl font-bold mb-6">
+        <span id="helmet-price"></span>,00 €
+      </div>
+
+      <!-- OPCIONES -->
+      <div class="">
+
+        <!-- FILA: COLOR + TALLAS -->
+        <div class="grid grid-cols-2 gap-12">
+
+          <!-- COLOR -->
+          <div>
+            <p class="uppercase text-sm tracking-widest mb-2">Color</p>
+            <div id="helmet-colors" class="flex gap-4"></div>
+          </div>
+
+          <!-- TALLAS (informativas) -->
+          <div>
+            <p class="uppercase text-sm tracking-widest mb-2">Tallas disponibles</p>
+            <div id="helmet-sizes" class="flex gap-3 flex-wrap"></div>
+          </div>
+
+        </div>
+
+        <!-- VISTA -->
+        <div>
+          <p class="uppercase text-sm tracking-widest mb-2">Vista</p>
+          <div id="helmet-thumbs" class="flex gap-4"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="pt-6">
+      <button
+        onclick="addHelmetToCart()"
+        class="w-full bg-black text-white px-10 py-4 uppercase tracking-widest hover:opacity-90 transition">
+        Añadir al carrito
+      </button>
+    </div>
+
+  </div>
+
+</main>
+
+
+<script src="js/logo3d.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>

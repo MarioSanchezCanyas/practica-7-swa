@@ -14,7 +14,7 @@
   <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
   <style>
 .motos-swiper {
-  padding-bottom: 60px;
+  padding-bottom: 15px;
 }
 
 .motos-swiper .swiper-slide {
@@ -52,11 +52,31 @@
   <div class="relative flex items-center gap-6">
 
     <!-- Carrito -->
-    <a href="cart.html" class="hover:text-gray-600">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
-      </svg>
-    </a>
+<!-- Carrito -->
+<a href="cart.html" class="relative hover:text-gray-600">
+
+  <!-- ICONO -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="22" height="22"
+       fill="currentColor"
+       viewBox="0 0 16 16">
+    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217z"/>
+  </svg>
+
+  <!-- CONTADOR -->
+  <span
+    id="cart-count"
+    class="absolute -top-2 -right-2
+           bg-red-600 text-white
+           text-[10px] font-bold
+           w-5 h-5 rounded-full
+           flex items-center justify-center
+           hidden">
+    0
+  </span>
+
+</a>
+
 
     <!-- Burger -->
     <button id="menu-btn" class="hover:text-gray-600">
@@ -64,12 +84,28 @@
     </button>
 
     <!-- Dropdown -->
-    <div id="menu"
-      class="hidden absolute right-0 top-10 w-40 bg-white border border-gray-200 shadow-md text-sm uppercase tracking-widest">
-      <a href="#" class="block px-4 py-3 hover:bg-gray-100">BMW</a>
-      <a href="#" class="block px-4 py-3 hover:bg-gray-100">Audi</a>
-      <a href="#" class="block px-4 py-3 hover:bg-gray-100">Mercedes</a>
-    </div>
+<div
+  id="menu"
+  class="hidden absolute right-0 top-12 w-48 bg-white border border-gray-200 shadow-lg
+         text-sm uppercase tracking-widest z-50"
+>
+  <a href="index.html" class="block px-5 py-3 hover:bg-gray-100">
+    Home
+  </a>
+  <a href="categoria1.html" class="block px-5 py-3 hover:bg-gray-100">
+    Coches
+  </a>
+  <a href="categoria2.html" class="block px-5 py-3 hover:bg-gray-100">
+    Motos
+  </a>
+  <a href="categoria3.html" class="block px-5 py-3 hover:bg-gray-100">
+    Cascos
+  </a>
+  <a href="cart.html" class="block px-5 py-3 hover:bg-gray-100 border-t border-gray-200">
+    Carrito
+  </a>
+</div>
+
   </div>
 </nav>
 
@@ -77,7 +113,7 @@
 <!-- CONTENIDO -->
 <main class="flex-1 bg-white">
 
-  <section class="max-w-7xl mx-auto px-10 py-[40px]">
+<section class="max-w-screen-2xl mx-auto px-6 py-[50px]">
 
     <h2 class="text-center text-3xl font-bold tracking-widest mb-20">
       Motos Delta
@@ -89,27 +125,27 @@
 
         <div class="swiper-slide flex flex-col items-center">
           <img src="img/suzuki.png" class="moto-img" />
-          <span class="mt-6 uppercase tracking-widest text-sm">Scooter</span>
+          <span class="mt-6 uppercase tracking-widest text-sm">Suzuki</span>
         </div>
 
         <div class="swiper-slide flex flex-col items-center">
           <img src="img/ducati.png" class="moto-img" />
-          <span class="mt-6 uppercase tracking-widest text-sm">Sport</span>
+          <span class="mt-6 uppercase tracking-widest text-sm">Ducati</span>
         </div>
 
         <div class="swiper-slide flex flex-col items-center">
           <img src="img/kawasaki.png" class="moto-img" />
-          <span class="mt-6 uppercase tracking-widest text-sm">Adventure</span>
+          <span class="mt-6 uppercase tracking-widest text-sm">Kawasaki</span>
         </div>
 
         <div class="swiper-slide flex flex-col items-center">
           <img src="img/bmw.png" class="moto-img" />
-          <span class="mt-6 uppercase tracking-widest text-sm">Urban</span>
+          <span class="mt-6 uppercase tracking-widest text-sm">BMW</span>
         </div>
 
                 <div class="swiper-slide flex flex-col items-center">
           <img src="img/triumph.png" class="moto-img" />
-          <span class="mt-6 uppercase tracking-widest text-sm">Urban</span>
+          <span class="mt-6 uppercase tracking-widest text-sm">Triumph</span>
         </div>
 
         
@@ -120,6 +156,14 @@
   </section>
 
 </main>
+
+<section class="bg-white">
+  <div class="max-w-screen-2xl mx-auto px-6 text-center">
+    <p class="text-2xl md:text-3xl font-light tracking-widest text-gray-800">
+      Potencia, diseño y libertad sobre dos ruedas.
+    </p>
+  </div>
+</section>
 
 <section id="featured-products" class="bg-white">
   <div class="max-w-7xl mx-auto px-10 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
