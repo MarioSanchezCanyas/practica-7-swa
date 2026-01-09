@@ -25,8 +25,8 @@
           "rating": 4.5,
           "stock": 1,
           "images": [
-            "img/F355.png",
-            "img/F355rear.png"
+            "img/f355.png",
+            "img/f355rear.png"
           ]
         },
         {
@@ -135,24 +135,24 @@
           "name": "Negro Mate",
           "code": "#000000",
           "images": [
-            "/img/arai1_2.png",
-            "/img/arai1_1.png"
+            "/img/arai12.png",
+            "/img/arai11.png"
           ]
         },
         {
           "name": "Blanco",
           "code": "#ffffff",
           "images": [
-            "/img/arai2_2.png",
-            "/img/arai2_1.png"
+            "/img/arai22.png",
+            "/img/arai21.png"
           ]
         },
         {
           "name": "Gris",
           "code": "#9ca3af",
           "images": [
-            "/img/arai3_1.png",
-            "/img/arai3_2.png"
+            "/img/arai31.png",
+            "/img/arai32.png"
           ]
         }
       ]

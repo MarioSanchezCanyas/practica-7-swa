@@ -23,6 +23,11 @@ var config = {
 
 var requiredGasolina = 5;
 var requiredLlaves = 5;
+var repairBtn;
+
+var mobileRepair = false;
+
+var restartButton;
 
 var player;
 var platforms;
@@ -54,6 +59,7 @@ var repairing = false;
 var repairTimer = 0;
 
 var pipeGroup;
+var jumpPressed = false;
 
 var fireSpeed = 160;
 var fireCount = 1;
@@ -94,6 +100,9 @@ function preload() {
 }
 
 function create() {
+
+this.input.addPointer(2);
+
 // Cargar récord guardado
 const savedHighScore = localStorage.getItem('delta_highscore');
 if (savedHighScore !== null) {
@@ -129,17 +138,69 @@ if (this.sys.game.device.input.touch) {
         padding: 10
     }).setScrollFactor(0).setDepth(3000).setInteractive();
 
-    leftBtn.on('pointerdown', () => mobileControls.left = true);
-    leftBtn.on('pointerup', () => mobileControls.left = false);
-    leftBtn.on('pointerout', () => mobileControls.left = false);
+// REPAIR
 
-    rightBtn.on('pointerdown', () => mobileControls.right = true);
-    rightBtn.on('pointerup', () => mobileControls.right = false);
-    rightBtn.on('pointerout', () => mobileControls.right = false);
+repairBtn = this.add.text(580, y, 'X', {
+    fontSize: '36px',
+    fill: '#000',
+    backgroundColor: '#00ff00aa',
+    padding: 12
+})
+.setScrollFactor(0)
+.setDepth(3000)
+.setInteractive();
 
-    jumpBtn.on('pointerdown', () => mobileControls.up = true);
-    jumpBtn.on('pointerup', () => mobileControls.up = false);
-    jumpBtn.on('pointerout', () => mobileControls.up = false);
+
+repairBtn.on('pointerdown', () => {
+    mobileRepair = true;
+});
+
+repairBtn.on('pointerup', () => {
+    mobileRepair = false;
+});
+
+repairBtn.on('pointerout', () => {
+    mobileRepair = false;
+});
+
+
+leftBtn.on('pointerdown', () => {
+    mobileControls.left = true;
+});
+
+leftBtn.on('pointerup', () => {
+    mobileControls.left = false;
+});
+
+leftBtn.on('pointerout', () => {
+    mobileControls.left = false;
+});
+
+
+rightBtn.on('pointerdown', () => {
+    mobileControls.right = true;
+});
+
+rightBtn.on('pointerup', () => {
+    mobileControls.right = false;
+});
+
+rightBtn.on('pointerout', () => {
+    mobileControls.right = false;
+});
+
+jumpBtn.on('pointerdown', () => {
+    jumpPressed = true;
+});
+
+jumpBtn.on('pointerup', () => {
+    mobileControls.up = false;
+});
+
+jumpBtn.on('pointerout', () => {
+    mobileControls.up = false;
+});
+
 }
 
 
@@ -296,6 +357,23 @@ repairKey = this.input.keyboard.addKey(
     Phaser.Input.Keyboard.KeyCodes.X
 );
 
+restartButton = this.add.text(400, 360, 'REINICIAR', {
+    fontSize: '28px',
+    fill: '#fff',
+    backgroundColor: '#000',
+    padding: { x: 20, y: 12 }
+})
+.setOrigin(0.5)
+.setDepth(4000)
+.setInteractive()
+.setAlpha(0);
+
+restartButton.on('pointerdown', () => {
+    restartGame(this);
+    restartButton.setAlpha(0);
+});
+
+
     spawnFire(this);
     spawnRound(this);
 }
@@ -432,16 +510,11 @@ function addHelmetToCart() {
 
 function update(time, delta) {
 
-    if (gameOver) {
-
-        infoText.setText('GAME OVER - Pulsa R para reiniciar');
-
-        if (Phaser.Input.Keyboard.JustDown(restartKey)) {
-            restartGame(this);
-        }
-
-        return;
-    }
+if (gameOver) {
+    restartButton.setAlpha(1);
+    infoText.setText(''); 
+    return;
+}
 
 const left =
     cursors.left.isDown ||
@@ -454,25 +527,32 @@ const right =
     mobileControls.right;
 
 const jump =
-    cursors.up.isDown ||
-    this.wasd.up.isDown ||
-    mobileControls.up;
-
-
-    // MOVIMIENTO
-if (left) {
-    player.setVelocityX(-250);
-    player.anims.play('left', true);
-} else if (right) {
-    player.setVelocityX(250);
-    player.anims.play('right', true);
-} else {
-    player.setVelocityX(0);
-    player.anims.play('idle');
-}
+    Phaser.Input.Keyboard.JustDown(cursors.up) ||
+    Phaser.Input.Keyboard.JustDown(this.wasd.up) ||
+    jumpPressed;
 
 if (jump && player.body.touching.down) {
     player.setVelocityY(-420);
+}
+
+// reset del salto táctil
+jumpPressed = false;
+
+    // MOVIMIENTO
+if (left && !right) {
+    player.setVelocityX(-250);
+    player.anims.play('left', true);
+} 
+else if (right && !left) {
+    player.setVelocityX(250);
+    player.anims.play('right', true);
+} 
+else {
+    player.setVelocityX(0);
+    player.anims.play('idle');
+}
+if (repairBtn) {
+    repairBtn.setAlpha(mobileRepair ? 1 : 0.6);
 }
 
 // ACTIVAR COCHE CUANDO HAY SUFICIENTES OBJETOS
@@ -488,15 +568,16 @@ if (
     )) {
         infoText.setText(`Mantén X para reparar (${Math.floor(repairTimer)}%)`);
 
-        if (repairKey.isDown) {
-            repairTimer += delta * 0.05;
+if (repairKey.isDown || mobileRepair) {
+    repairTimer += delta * 0.05;
 
-            if (repairTimer >= 100) {
-                completeRepair();
-            }
-        } else {
-            repairTimer = 0;
-        }
+    if (repairTimer >= 100) {
+        completeRepair();
+    }
+} else {
+    repairTimer = 0;
+}
+
     } else {
         infoText.setText('Vuelve al coche');
     }
@@ -549,6 +630,7 @@ function hitFire(player, fire) {
 }
 
 function restartGame(scene) {
+    restartButton.setAlpha(0);
 
     gameOver = false;
 
