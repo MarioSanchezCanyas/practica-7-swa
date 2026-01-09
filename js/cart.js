@@ -24,7 +24,7 @@ function addToCart(product) {
   } else {
     cart.push({
       ...product,
-      id: productId, // 🔑 SIEMPRE STRING
+      id: productId,
       quantity: 1
     });
   }

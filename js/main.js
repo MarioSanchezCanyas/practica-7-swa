@@ -555,12 +555,12 @@ document.addEventListener('DOMContentLoaded', () => {
       allProducts = category.products;
       filteredProducts = [...allProducts];
 
-      // 👉 SOLO renderProducts si existe el contenedor
+      // Solo renderProducts si existe el contenedor
       if (document.getElementById('products')) {
         renderProducts(filteredProducts);
       }
 
-      // 👉 SOLO renderMoto si existe el featured
+      // Solo renderMoto si existe el featured
       if (document.getElementById('featured-products')) {
         renderMotos(category.products, 5);
       }
@@ -574,20 +574,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-  // filtros SOLO si existen
+  // filtros solo si existen
   ['filter-price', 'filter-rating', 'filter-stock', 'filter-sort']
     .forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('change', applyFilters);
     });
 
-  // swiper SOLO si existe
+  // swiper solo si existe
   if (document.querySelector('.motos-swiper')) {
 new Swiper('.motos-swiper', {
   loop: true,
   centeredSlides: true,
   slidesPerView: 3,
-  spaceBetween: 120, // antes 80
+  spaceBetween: 120,
   grabCursor: true,
   breakpoints: {
     0: { slidesPerView: 1.2 },

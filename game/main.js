@@ -1,8 +1,12 @@
 var config = {
     type: Phaser.AUTO,
+    parent: 'game-container',
     width: 800,
     height: 600,
-    parent: 'game-container',
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     physics: {
         default: 'arcade',
         arcade: {
@@ -16,12 +20,20 @@ var config = {
         update
     }
 };
+
 var requiredGasolina = 5;
 var requiredLlaves = 5;
 
 var player;
 var platforms;
 var cursors;
+
+var mobileControls = {
+    left: false,
+    right: false,
+    up: false
+};
+
 
 var gasolinaGroup;
 var llavesGroup;
@@ -40,6 +52,8 @@ var infoText;
 var coche;
 var repairing = false;
 var repairTimer = 0;
+
+var pipeGroup;
 
 var fireSpeed = 160;
 var fireCount = 1;
@@ -86,9 +100,60 @@ if (savedHighScore !== null) {
     highScore = parseInt(savedHighScore);
 }
 
+if (this.sys.game.device.input.touch) {
+
+    const btnSize = 64;
+    const y = 520;
+
+    // LEFT
+    const leftBtn = this.add.text(40, y, '◀', {
+        fontSize: '48px',
+        fill: '#000',
+        backgroundColor: '#ffffffaa',
+        padding: 10
+    }).setScrollFactor(0).setDepth(3000).setInteractive();
+
+    // RIGHT
+    const rightBtn = this.add.text(120, y, '▶', {
+        fontSize: '48px',
+        fill: '#000',
+        backgroundColor: '#ffffffaa',
+        padding: 10
+    }).setScrollFactor(0).setDepth(3000).setInteractive();
+
+    // JUMP
+    const jumpBtn = this.add.text(700, y, '▲', {
+        fontSize: '48px',
+        fill: '#000',
+        backgroundColor: '#ffffffaa',
+        padding: 10
+    }).setScrollFactor(0).setDepth(3000).setInteractive();
+
+    leftBtn.on('pointerdown', () => mobileControls.left = true);
+    leftBtn.on('pointerup', () => mobileControls.left = false);
+    leftBtn.on('pointerout', () => mobileControls.left = false);
+
+    rightBtn.on('pointerdown', () => mobileControls.right = true);
+    rightBtn.on('pointerup', () => mobileControls.right = false);
+    rightBtn.on('pointerout', () => mobileControls.right = false);
+
+    jumpBtn.on('pointerdown', () => mobileControls.up = true);
+    jumpBtn.on('pointerup', () => mobileControls.up = false);
+    jumpBtn.on('pointerout', () => mobileControls.up = false);
+}
+
+
+this.wasd = this.input.keyboard.addKeys({
+    up: Phaser.Input.Keyboard.KeyCodes.W,
+    left: Phaser.Input.Keyboard.KeyCodes.A,
+    down: Phaser.Input.Keyboard.KeyCodes.S,
+    right: Phaser.Input.Keyboard.KeyCodes.D
+});
+
+
     this.add.image(400, 300, 'bg');
 
-    // PLATAFORMAS (GRIS)
+    // PLATAFORMAS
     platforms = this.physics.add.staticGroup();
     platforms.create(400, 580, 'ground')
         .setScale(2)
@@ -109,7 +174,7 @@ if (savedHighScore !== null) {
     player.setCollideWorldBounds(true);
     player.setBounce(0.1);
 
-    // ANIMACIONES (igual)
+    // ANIMACIONES
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
@@ -133,17 +198,30 @@ if (savedHighScore !== null) {
 
 
 pipes = [];
+pipeGroup = this.physics.add.staticGroup();
 
-const pipeY =0;
+const pipeY = 0;
 const pipeXPositions = Phaser.Utils.Array.NumberArrayStep(165, 700, 120);
 
 pipeXPositions.forEach(x => {
-    let pipe = this.add.image(x, pipeY, 'pipe');
+    let pipe = pipeGroup.create(x, pipeY, 'pipe');
     pipe.setOrigin(0.5, 0);
     pipe.setDepth(10);
+
+    // Ajustar cuerpo físico al tamaño real
+    pipe.body.setSize(
+        pipe.width * 0.9,
+        pipe.height
+    );
+
+    pipe.body.setOffset(
+        pipe.width * 0.05,
+        0
+    );
+
     pipes.push(pipe);
-    
 });
+
 
 restartKey = this.input.keyboard.addKey(
     Phaser.Input.Keyboard.KeyCodes.R
@@ -208,6 +286,8 @@ roundText = this.add.text(620, 16, '', {
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(collectibles, platforms);
     this.physics.add.collider(fuegos, platforms);
+    this.physics.add.collider(player, pipeGroup);
+    this.physics.add.collider(collectibles, pipeGroup);
 
     this.physics.add.overlap(player, collectibles, collectItem, null, this);
     this.physics.add.collider(player, fuegos, hitFire, null, this);
@@ -231,7 +311,7 @@ function spawnCasco(scene) {
     );
 
     casco.setScale(0.6);
-    casco.setBounce(0.5);
+    casco.setBounce(0.1);
     casco.itemType = 'casco';
     casco.setDepth(5);
 }
@@ -284,7 +364,7 @@ function spawnItemsFromPipes(scene, possibleItems, amount) {
             itemKey
         );
 
-        item.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        item.setBounceY(Phaser.Math.FloatBetween(0.3, 0.4));
         item.setScale(0.5);
         item.itemType = itemKey;
         item.setDepth(5);
@@ -363,21 +443,37 @@ function update(time, delta) {
         return;
     }
 
-    // MOVIMIENTO
-    if (cursors.left.isDown) {
-        player.setVelocityX(-250);
-        player.anims.play('left', true);
-    } else if (cursors.right.isDown) {
-        player.setVelocityX(250);
-        player.anims.play('right', true);
-    } else {
-        player.setVelocityX(0);
-        player.anims.play('idle');
-    }
+const left =
+    cursors.left.isDown ||
+    this.wasd.left.isDown ||
+    mobileControls.left;
 
-    if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(-420);
-    }
+const right =
+    cursors.right.isDown ||
+    this.wasd.right.isDown ||
+    mobileControls.right;
+
+const jump =
+    cursors.up.isDown ||
+    this.wasd.up.isDown ||
+    mobileControls.up;
+
+
+    // MOVIMIENTO
+if (left) {
+    player.setVelocityX(-250);
+    player.anims.play('left', true);
+} else if (right) {
+    player.setVelocityX(250);
+    player.anims.play('right', true);
+} else {
+    player.setVelocityX(0);
+    player.anims.play('idle');
+}
+
+if (jump && player.body.touching.down) {
+    player.setVelocityY(-420);
+}
 
 // ACTIVAR COCHE CUANDO HAY SUFICIENTES OBJETOS
 if (
@@ -490,7 +586,7 @@ function completeRepair() {
 
     roundsCompleted++;
 
-    // 🏆 NUEVO RÉCORD
+    // NUEVO RÉCORD
     if (roundsCompleted > highScore) {
         highScore = roundsCompleted;
         localStorage.setItem('delta_highscore', highScore);
@@ -506,7 +602,7 @@ function completeRepair() {
     gasolinaCount = 0;
     llavesCount = 0;
 
-    updateHUD(); // 👈 importante
+    updateHUD(); // importante
     spawnRound(player.scene);
 }
 
@@ -518,7 +614,7 @@ function spawnFire(scene) {
 
     const speed = fireSpeed;
 
-    // Ángulo controlado (siempre diagonal)
+    // Ángulo controlado siempre diagonals
     const angle = Phaser.Math.DegToRad(
         Phaser.Math.Between(25, 65)
     );

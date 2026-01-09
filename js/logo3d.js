@@ -2,7 +2,7 @@ const canvas = document.getElementById('logo-canvas');
 
 const illo = new Zdog.Illustration({
   element: canvas,
-  dragRotate: false, // ⬅️ ya no se puede rotar a mano
+  dragRotate: false,
   zoom: 0.5,
   resize: true,
   background: null,
@@ -34,7 +34,7 @@ silverShades.forEach((shade, i) => {
 // --------------------
 // FONDO INTERIOR DEL CÍRCULO (GRADIENTE AMARILLO)
 // --------------------
-const yellowShades = ['#ffffffff', '#ffffffff', '#ffffffff']; // tonos amarillo claro a dorado
+const yellowShades = ['#ffffffff', '#ffffffff', '#ffffffff']; // al final es blanco
 yellowShades.forEach((shade, i) => {
   new Zdog.Ellipse({
     addTo: logo,
@@ -49,7 +49,7 @@ yellowShades.forEach((shade, i) => {
 // --------------------
 // LOGO INTERNO ROJO CON GRADIENTE SUAVE
 // --------------------
-const redShades = ['#000000', '#000000', '#000000']; // rojo brillante a más oscuro
+const redShades = ['#000000', '#000000', '#000000']; // al final es negro
 redShades.forEach((shade, i) => {
   // S + conexión
   new Zdog.Shape({
